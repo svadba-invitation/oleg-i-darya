@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Олег и Дарья · 12.12.2026</title>
+  <meta name="description" content="Приглашение на свадьбу Олега и Дарьи. 12 декабря 2026, отель «Вега Измайлово».">
+  <meta name="theme-color" content="#12302a">
+  <meta property="og:title" content="Олег и Дарья · 12.12.2026">
+  <meta property="og:description" content="Этой зимой у нашей истории появится новая глава. Приглашаем вас разделить этот день вместе с нами.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/NotoSerifDisplay-italic-300-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/YsabeauOffice-normal-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/GreatVibes-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="img/seal.webp" as="image" type="image/webp">
+  <link rel="stylesheet" href="css/fonts.css?v=20261017e">
+  <link rel="stylesheet" href="css/style.css?v=20261017e">
+</head>
+<body class="is-locked">
+
+  <!-- Фон: медленно плывущие огоньки свечей -->
+  <canvas class="embers" aria-hidden="true"></canvas>
+
+  <!-- ============ ЗАСТАВКА: КОНВЕРТ ============ -->
+  <div class="intro" id="intro">
+    <div class="env__piece env__piece--l"><div class="env__fill"></div></div>
+    <div class="env__piece env__piece--r"><div class="env__fill"></div></div>
+    <div class="env__piece env__piece--b">
+      <div class="env__fill">
+        <dl class="env__addr">
+          <div><dt>Для:</dt><dd id="env-to">Родных и близких</dd></div>
+          <div><dt>От:</dt><dd>Олега и Дарьи</dd></div>
+        </dl>
+      </div>
+      <svg class="env__edge" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 64 L47 45.5 Q50 44.4 53 45.5 L100 64" stroke="rgba(255,226,214,.24)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="env__piece env__piece--t">
+      <div class="env__fill">
+        <p class="env__title"><span>Вам пришло</span><em>письмо</em></p>
+      </div>
+      <svg class="env__edge" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 40 L46.5 59.2 Q50 60.7 53.5 59.2 L100 40" stroke="rgba(255,226,214,.34)" stroke-width="1.2"/>
+        <path d="M0 40.25 L46.5 59.45 Q50 60.95 53.5 59.45 L100 40.25" stroke="rgba(30,0,8,.35)" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <button class="seal" id="envelope" type="button" aria-label="Открыть приглашение">
+      <picture>
+        <source srcset="img/seal.webp" type="image/webp">
+        <img src="img/seal.png" alt="" width="640" height="640" decoding="async" fetchpriority="high">
+      </picture>
+    </button>
+    <p class="intro__hint">нажмите на печать</p>
+  </div>
+
+  <!-- ============ МУЗЫКА ============ -->
+  <button class="music" id="music" type="button" aria-pressed="false" aria-label="Музыка" inert>
+    <span class="music__ring" aria-hidden="true"></span>
+    <svg class="music__note" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M210.3,56.34l-80-24A8,8,0,0,0,120,40V148.26A48,48,0,1,0,136,184V98.75l69.7,20.91A8,8,0,0,0,216,112V64A8,8,0,0,0,210.3,56.34Z"/></svg>
+    <span class="music__toast" role="status"></span>
+  </button>
+  <audio id="track" src="audio/music.mp3" preload="none" loop></audio>
+
+  <main id="page" inert>
+
+    <!-- ============ ОБЛОЖКА ============ -->
+    <section class="hero" id="top">
+      <p class="hero__kicker" data-hero="1">Приглашение на свадьбу</p>
+      <h1 class="hero__names" tabindex="-1" id="hero-title">
+        <span class="hero__name" data-hero="2">Олег</span>
+        <span class="hero__amp" data-hero="3">&amp;</span>
+        <span class="hero__name hero__name--2" data-hero="4">Дарья</span>
+      </h1>
+
+      <figure class="hearth" id="hearth" data-hero="5" aria-hidden="true">
+        <div class="hearth__halo"></div>
+
+        <!-- Глубина топки: задняя стенка, кирпич, дальнее полено, угли -->
+        <svg class="hearth__layer" viewBox="0 0 360 280">
+          <defs>
+            <linearGradient id="fbWall" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#060505"/>
+              <stop offset="1" stop-color="#1c120d"/>
+            </linearGradient>
+            <radialGradient id="fbLight" cx="180" cy="238" r="118" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#ffa04a" stop-opacity=".95"/>
+              <stop offset=".32" stop-color="#d0601f" stop-opacity=".6"/>
+              <stop offset=".7" stop-color="#5a1f0c" stop-opacity=".28"/>
+              <stop offset="1" stop-color="#140806" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="emberBed" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#ffd27a"/>
+              <stop offset=".35" stop-color="#ff7a26"/>
+              <stop offset=".75" stop-color="#9c2a0c" stop-opacity=".7"/>
+              <stop offset="1" stop-color="#3a0d05" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="barkBack" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7a4424"/>
+              <stop offset=".3" stop-color="#3a2013"/>
+              <stop offset="1" stop-color="#120a06"/>
+            </linearGradient>
+          </defs>
+          <path d="M104 248 V172 C104 148 130 138 180 138 C230 138 256 148 256 172 V248 Z" fill="#070505"/>
+          <path d="M104 248 V172 L128 162 V240 Z" fill="#0c0806"/>
+          <path d="M256 248 V172 L232 162 V240 Z" fill="#0c0806"/>
+          <rect x="128" y="162" width="104" height="78" fill="url(#fbWall)"/>
+          <path d="M104 248 L128 240 H232 L256 248 Z" fill="#1d110b"/>
+          <g id="bricks" stroke="#ff9452" stroke-opacity=".13" stroke-width=".6" fill="none"></g>
+          <path class="glow-var" d="M104 248 V172 C104 148 130 138 180 138 C230 138 256 148 256 172 V248 Z" fill="url(#fbLight)"/>
+          <g transform="rotate(-3 180 226)">
+            <rect x="134" y="218" width="92" height="13" rx="6.5" fill="url(#barkBack)"/>
+            <path class="glow-var" d="M140 219 H220" stroke="#ff9b52" stroke-opacity=".5" stroke-width="1"/>
+          </g>
+          <ellipse class="hearth__embers" cx="180" cy="243" rx="62" ry="6.5" fill="url(#emberBed)"/>
+        </svg>
+
+        <!-- Живой огонь -->
+        <canvas class="hearth__fire" id="fire"></canvas>
+
+        <!-- Передний план: поленья, решётка, мраморный портал, полка -->
+        <svg class="hearth__layer" viewBox="0 0 360 280">
+          <defs>
+            <linearGradient id="mbl" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2a5f4d"/>
+              <stop offset=".55" stop-color="#1b4537"/>
+              <stop offset="1" stop-color="#11302a"/>
+            </linearGradient>
+            <linearGradient id="mblArch" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#35705b"/>
+              <stop offset="1" stop-color="#1e4c3d"/>
+            </linearGradient>
+            <linearGradient id="mblCol" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#173f32"/>
+              <stop offset=".45" stop-color="#2c6551"/>
+              <stop offset="1" stop-color="#163a2f"/>
+            </linearGradient>
+            <linearGradient id="shelfTop" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#22533f"/>
+              <stop offset="1" stop-color="#3d7a63"/>
+            </linearGradient>
+            <linearGradient id="shelfFace" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2e6753"/>
+              <stop offset="1" stop-color="#173f33"/>
+            </linearGradient>
+            <linearGradient id="slabTop" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#173d31"/>
+              <stop offset="1" stop-color="#2b604d"/>
+            </linearGradient>
+            <linearGradient id="bark" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#8a4e2a"/>
+              <stop offset=".28" stop-color="#46281a"/>
+              <stop offset="1" stop-color="#150c07"/>
+            </linearGradient>
+            <radialGradient id="woodEnd" cx="45%" cy="45%" r="60%">
+              <stop offset="0" stop-color="#d79a62"/>
+              <stop offset=".5" stop-color="#a5693b"/>
+              <stop offset=".85" stop-color="#6b3d21"/>
+              <stop offset="1" stop-color="#2e1a0e"/>
+            </radialGradient>
+            <linearGradient id="iron" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#5a5550"/>
+              <stop offset="1" stop-color="#121110"/>
+            </linearGradient>
+            <radialGradient id="ironBall" cx="35%" cy="30%" r="70%">
+              <stop offset="0" stop-color="#8a8580"/>
+              <stop offset=".5" stop-color="#2e2b28"/>
+              <stop offset="1" stop-color="#0c0b0a"/>
+            </radialGradient>
+            <radialGradient id="warm" cx="180" cy="236" r="160" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#ffa04f" stop-opacity=".62"/>
+              <stop offset=".4" stop-color="#e2722f" stop-opacity=".24"/>
+              <stop offset="1" stop-color="#e2722f" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="soft" x="-20%" y="-50%" width="140%" height="200%">
+              <feGaussianBlur stdDeviation="1.6"/>
+            </filter>
+            <clipPath id="stoneClip">
+              <rect x="26" y="73" width="308" height="27"/>
+              <rect x="46" y="100" width="268" height="148"/>
+              <path d="M22 248 H338 L348 268 H12 Z"/>
+            </clipPath>
+            <clipPath id="surroundClip">
+              <path clip-rule="evenodd" d="M46 100 H314 V248 H46 Z M104 248 V172 C104 148 130 138 180 138 C230 138 256 148 256 172 V248 Z"/>
+            </clipPath>
+          </defs>
+
+          <!-- поленья -->
+          <g transform="rotate(-8 171 239)">
+            <rect x="122" y="231" width="96" height="14" rx="7" fill="url(#bark)"/>
+            <path d="M132 236 h22 M160 241 h28 M192 235 h16 M138 242 h12" stroke="#120904" stroke-opacity=".7" stroke-width=".9" stroke-linecap="round"/>
+            <path class="glow-var" d="M129 232.4 H211" stroke="#ffab5e" stroke-opacity=".75" stroke-width="1.1" stroke-linecap="round"/>
+            <ellipse cx="212" cy="238" rx="5.2" ry="7" fill="url(#woodEnd)"/>
+            <ellipse cx="212" cy="238" rx="2.6" ry="3.6" fill="none" stroke="#5a3018" stroke-opacity=".55" stroke-width=".6"/>
+          </g>
+          <g transform="rotate(9 192 241)">
+            <rect x="146" y="234" width="94" height="13" rx="6.5" fill="url(#bark)"/>
+            <path d="M160 238 h18 M184 243 h26 M214 237 h14" stroke="#120904" stroke-opacity=".7" stroke-width=".9" stroke-linecap="round"/>
+            <path class="glow-var" d="M152 235.4 H234" stroke="#ffab5e" stroke-opacity=".7" stroke-width="1.1" stroke-linecap="round"/>
+            <ellipse cx="151" cy="240.5" rx="4.8" ry="6.5" fill="url(#woodEnd)"/>
+            <ellipse cx="151" cy="240.5" rx="2.4" ry="3.3" fill="none" stroke="#5a3018" stroke-opacity=".55" stroke-width=".6"/>
+          </g>
+          <ellipse class="hearth__embers" cx="182" cy="247.5" rx="44" ry="2.6" fill="#ff7a2e" filter="url(#soft)"/>
+
+          <!-- каминная решётка -->
+          <g>
+            <rect x="124" y="229" width="3.6" height="18" rx="1.2" fill="url(#iron)"/>
+            <rect x="232.4" y="229" width="3.6" height="18" rx="1.2" fill="url(#iron)"/>
+            <circle cx="125.8" cy="227.6" r="3.4" fill="url(#ironBall)"/>
+            <circle cx="234.2" cy="227.6" r="3.4" fill="url(#ironBall)"/>
+            <rect x="116" y="245.2" width="128" height="3.4" rx="1.7" fill="url(#iron)"/>
+          </g>
+
+          <!-- мраморный портал -->
+          <path fill-rule="evenodd" fill="url(#mbl)" d="M46 100 H314 V248 H46 Z M104 248 V172 C104 148 130 138 180 138 C230 138 256 148 256 172 V248 Z"/>
+          <g clip-path="url(#surroundClip)" fill="none" stroke="#b9e0cb" stroke-linecap="round">
+            <path stroke-opacity=".2" stroke-width=".8" d="M46 118 C78 132 94 112 120 126 S168 108 204 118 S246 104 262 112"/>
+            <path stroke-opacity=".16" stroke-width=".7" d="M314 136 C290 150 302 176 278 190 S262 220 292 248"/>
+            <path stroke-opacity=".14" stroke-width=".6" d="M58 248 C70 220 50 200 66 176 S60 150 76 136"/>
+            <path stroke-opacity=".1" stroke-width="1.6" d="M216 100 C232 114 252 104 270 118 S302 112 314 126"/>
+            <path stroke-opacity=".12" stroke-width=".5" d="M46 196 C64 188 70 204 90 196"/>
+          </g>
+          <!-- обрамление арки -->
+          <path fill-rule="evenodd" fill="url(#mblArch)" d="M96 248 V170 C96 140 126 128 180 128 C234 128 264 140 264 170 V248 Z M104 248 V172 C104 148 130 138 180 138 C230 138 256 148 256 172 V248 Z"/>
+          <path d="M96 248 V170 C96 140 126 128 180 128 C234 128 264 140 264 170 V248" fill="none" stroke="#e9e3d3" stroke-opacity=".38" stroke-width=".7"/>
+          <path d="M104 248 V172 C104 148 130 138 180 138 C230 138 256 148 256 172 V248" fill="none" stroke="#06140f" stroke-width="2.4"/>
+          <path d="M173 127 H187 L184.5 141 H175.5 Z" fill="#3b7863" stroke="#e9e3d3" stroke-opacity=".45" stroke-width=".6"/>
+
+          <!-- пилястры -->
+          <g id="pilasters">
+            <rect x="50" y="126" width="44" height="7" fill="#2f6853"/>
+            <path d="M50 126 H94" stroke="#e9e3d3" stroke-opacity=".45" stroke-width=".6"/>
+            <rect x="54" y="133" width="36" height="104" fill="url(#mblCol)"/>
+            <path d="M63 140 V230 M72 140 V230 M81 140 V230" stroke="#0b221a" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M64.3 140 V230 M73.3 140 V230 M82.3 140 V230" stroke="#6aa58b" stroke-opacity=".35" stroke-width=".6"/>
+            <rect x="50" y="237" width="44" height="11" fill="#1d4a3b"/>
+            <path d="M50 237 H94" stroke="#e9e3d3" stroke-opacity=".35" stroke-width=".6"/>
+          </g>
+          <use href="#pilasters" transform="translate(216 0)"/>
+
+          <!-- фриз с монограммой -->
+          <rect x="142" y="102" width="76" height="22" rx="1" fill="#2a6150" stroke="#e9e3d3" stroke-opacity=".32" stroke-width=".6"/>
+          <text x="180.4" y="119.6" text-anchor="middle" class="hearth__mono hearth__mono--shade">О<tspan class="hearth__amp" dx="1" dy="-1">&amp;</tspan><tspan dx="1" dy="1">Д</tspan></text>
+          <text x="180" y="119.2" text-anchor="middle" class="hearth__mono">О<tspan class="hearth__amp" dx="1" dy="-1">&amp;</tspan><tspan dx="1" dy="1">Д</tspan></text>
+          <path d="M60 112 H132 M228 112 H300" stroke="#0e2a20" stroke-opacity=".6" stroke-width=".8"/>
+          <path d="M60 113.2 H132 M228 113.2 H300" stroke="#6aa58b" stroke-opacity=".22" stroke-width=".5"/>
+
+          <!-- полка -->
+          <path d="M36 73 H324 L330 80 H30 Z" fill="url(#shelfTop)"/>
+          <rect x="26" y="80" width="308" height="9" fill="url(#shelfFace)"/>
+          <path d="M26 80.4 H334" stroke="#eee8d8" stroke-opacity=".55" stroke-width=".7"/>
+          <rect x="34" y="89" width="292" height="4" fill="#163b2f"/>
+          <rect x="38" y="93" width="284" height="7" fill="url(#shelfFace)"/>
+          <path d="M38 93.3 H322" stroke="#eee8d8" stroke-opacity=".25" stroke-width=".5"/>
+          <path d="M46 100.6 H314" stroke="#081a14" stroke-opacity=".7" stroke-width="1.2"/>
+
+          <!-- очаг -->
+          <path d="M22 248 H338 L348 260 H12 Z" fill="url(#slabTop)"/>
+          <rect x="12" y="260" width="336" height="8" fill="#0d251e"/>
+          <path d="M12 260.4 H348" stroke="#e9e3d3" stroke-opacity=".28" stroke-width=".6"/>
+
+          <!-- тёплый отсвет огня на камне -->
+          <rect class="glow-var" x="0" y="60" width="360" height="220" fill="url(#warm)" clip-path="url(#stoneClip)"/>
+
+          <!-- гирлянда и свечи заполняются скриптом -->
+          <g id="garland"></g>
+          <g id="candles"></g>
+        </svg>
+      </figure>
+
+      <p class="hero__date" data-hero="6">
+        <span>12</span><i></i><span>12</span><i></i><span>2026</span>
+      </p>
+    </section>
+
+    <!-- ============ СЕРДЕЧКО ============ -->
+    <div class="heartbeat" aria-hidden="true">
+      <span class="heartbeat__ring"></span>
+      <svg class="heartbeat__heart" viewBox="0 0 256 256"><path d="M240,102c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,228.66,16,172,16,102A62.07,62.07,0,0,1,78,40c20.65,0,38.73,8.88,50,23.89C139.27,48.88,157.35,40,178,40A62.07,62.07,0,0,1,240,102Z"/></svg>
+    </div>
+
+    <!-- ============ ТЕКСТ ПРИГЛАШЕНИЯ ============ -->
+    <section class="letter" id="invite">
+      <p class="letter__lead" data-words>Совсем скоро состоится прекрасное событие: наша свадьба!</p>
+      <p class="letter__body" data-reveal>Этой зимой у нашей истории появится новая глава, и&nbsp;мы очень хотим, чтобы вы стали частью её первой страницы. С&nbsp;огромным удовольствием и&nbsp;трепетом приглашаем вас разделить этот день вместе с&nbsp;нами и&nbsp;стать свидетелями рождения новой семьи.</p>
+    </section>
+
+    <!-- ============ ДАТА ============ -->
+    <section class="date" id="date" aria-labelledby="date-title">
+      <h2 class="title" id="date-title" data-reveal>Дата</h2>
+      <div class="cal" data-reveal aria-label="Декабрь 2026, отмечено 12 декабря">
+        <div class="cal__top">
+          <span class="cal__month">Декабрь</span>
+          <span class="cal__year">2026</span>
+        </div>
+        <div class="cal__grid" id="calendar"></div>
+      </div>
+      <p class="date__caption" data-reveal>
+        <span class="date__day"><b>12</b> декабря</span>
+        <span class="date__sub">суббота, 2026</span>
+      </p>
+    </section>
+
+    <!-- ============ МЕСТО ============ -->
+    <section class="venue" id="venue" aria-labelledby="venue-title">
+      <div class="venue__text" data-reveal>
+        <h2 class="title" id="venue-title">Место</h2>
+        <p class="venue__name">Зал «Вега Малая»</p>
+        <p class="venue__addr">Отель «Вега Измайлово»<br>Москва, Измайловское шоссе, 71, корп.&nbsp;3В</p>
+        <a class="btn" id="map-link" href="#" target="_blank" rel="noopener">
+          <span>Открыть в картах</span>
+          <span class="btn__ico"><svg class="ico" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M198,64V168a6,6,0,0,1-12,0V78.48L68.24,196.24a6,6,0,0,1-8.48-8.48L177.52,70H88a6,6,0,0,1,0-12H192A6,6,0,0,1,198,64Z"/></svg></span>
+        </a>
+      </div>
+
+      <figure class="sketch map" id="map" data-reveal aria-label="Иллюстрированная карта: отель «Вега» на Измайловском шоссе, рядом метро «Партизанская», Измайловский кремль и парк">
+        <svg viewBox="0 0 400 320" id="map-svg" aria-hidden="true">
+          <defs>
+            <clipPath id="mapClip"><rect x="-10" y="-40" width="420" height="370"/></clipPath>
+            <linearGradient id="asphalt" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#8b8f95"/><stop offset="1" stop-color="#787c82"/>
+            </linearGradient>
+            <linearGradient id="vegaFront" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fbfaf7"/><stop offset="1" stop-color="#e2ded6"/>
+            </linearGradient>
+            <linearGradient id="vegaSide" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#c9bfb1"/><stop offset="1" stop-color="#b3a897"/>
+            </linearGradient>
+            <linearGradient id="bldFront" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#e6dfd4"/><stop offset="1" stop-color="#d3cabc"/>
+            </linearGradient>
+            <radialGradient id="treeG" cx="38%" cy="34%" r="70%">
+              <stop offset="0" stop-color="#7aa580"/><stop offset=".55" stop-color="#43715a"/><stop offset="1" stop-color="#2a5040"/>
+            </radialGradient>
+            <linearGradient id="pondG" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#d4e5ec"/><stop offset="1" stop-color="#a9c6d4"/>
+            </linearGradient>
+            <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#9a2a3f"/><stop offset="1" stop-color="#5e1020"/>
+            </linearGradient>
+            <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#fff2c4" stop-opacity=".85"/><stop offset="1" stop-color="#fff2c4" stop-opacity="0"/>
+            </linearGradient>
+            <radialGradient id="glowWin"><stop offset="0" stop-color="#ffd98a" stop-opacity=".9"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient>
+            <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#b8c8d4"/><stop offset="1" stop-color="#7f97aa"/>
+            </linearGradient>
+            <linearGradient id="fadeX" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#000"/><stop offset=".07" stop-color="#fff"/>
+              <stop offset=".93" stop-color="#fff"/><stop offset="1" stop-color="#000"/>
+            </linearGradient>
+            <mask id="roadFade" maskUnits="userSpaceOnUse" x="0" y="170" width="400" height="60">
+              <rect x="0" y="170" width="400" height="60" fill="url(#fadeX)"/>
+            </mask>
+            <linearGradient id="firG" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#2f6650"/><stop offset=".55" stop-color="#22503d"/><stop offset="1" stop-color="#173a2c"/>
+            </linearGradient>
+            <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.6"/></filter>
+          </defs>
+
+          <g clip-path="url(#mapClip)">
+            <!-- пруд у кремля -->
+            <g class="map__pond">
+              <path d="M290 160 C298 150 330 150 352 154 C374 157 396 154 398 164 C400 173 374 177 344 176 C314 175 284 172 290 160 Z" fill="url(#pondG)" stroke="#98b6c6" stroke-width=".6"/>
+              <path d="M300 160 C310 157 322 157 332 158" stroke="#fff" stroke-opacity=".7" stroke-width=".8" fill="none" stroke-linecap="round"/>
+              <ellipse class="ripple" cx="356" cy="165" rx="7" ry="2.2" fill="none" stroke="#fff" stroke-width=".7"/>
+              <ellipse class="ripple ripple--2" cx="320" cy="168" rx="6" ry="1.9" fill="none" stroke="#fff" stroke-width=".7"/>
+            </g>
+
+            <!-- деревья (скрипт) -->
+            <g id="trees"></g>
+
+            <!-- шоссе: края растворяются в бумаге -->
+            <g mask="url(#roadFade)">
+            <rect x="0" y="180" width="400" height="8" fill="#e4ddd2"/>
+            <rect x="0" y="188" width="400" height="26" fill="url(#asphalt)"/>
+            <rect x="0" y="214" width="400" height="7" fill="#e4ddd2"/>
+            <path d="M0 188.3 H400 M0 213.7 H400" stroke="#62666b" stroke-width=".7"/>
+            <path d="M0 201 H400" stroke="#f4f1ea" stroke-width=".9" stroke-dasharray="9 7"/>
+            <g fill="#f4f1ea">
+              <rect x="152" y="190" width="18" height="2.4"/><rect x="152" y="194.4" width="18" height="2.4"/>
+              <rect x="152" y="198.8" width="18" height="2.4"/><rect x="152" y="203.2" width="18" height="2.4"/>
+              <rect x="152" y="207.6" width="18" height="2.4"/>
+            </g>
+            <text class="map__road" x="300" y="210.5" text-anchor="middle">Измайловское шоссе</text>
+            </g>
+
+            <!-- соседняя башня комплекса «Измайлово» -->
+            <g class="map__tower">
+              <ellipse cx="128" cy="172" rx="40" ry="3.6" fill="#2a2e2a" fill-opacity=".12" filter="url(#softShadow)"/>
+              <path d="M150 94 L161 87 V163 L150 170 Z" fill="url(#vegaSide)"/>
+              <path d="M98 94 L109 87 H161 L150 94 Z" fill="#eeebe5"/>
+              <rect x="98" y="94" width="52" height="76" fill="url(#vegaFront)"/>
+              <rect x="98" y="94" width="52" height="4" fill="#cdc6bb"/>
+              <g id="facadeAlfa"></g>
+            </g>
+
+            <!-- отель «Вега»: белая башня-пластина с вертикальными полосами балконов -->
+            <g class="map__vega">
+              <ellipse cx="212" cy="183" rx="54" ry="4.2" fill="#2a2e2a" fill-opacity=".14" filter="url(#softShadow)"/>
+              <path d="M244 56 L257 48 V160 L244 168 Z" fill="url(#vegaSide)"/>
+              <path d="M247.5 54 V164 M251 51.8 V162 M254.5 49.6 V159.6" stroke="#a89d8e" stroke-width=".7" stroke-opacity=".7"/>
+              <path d="M170 56 L183 48 H257 L244 56 Z" fill="#eeebe5"/>
+              <rect x="170" y="56" width="74" height="112" fill="url(#vegaFront)"/>
+              <g id="facadeVega"></g>
+              <rect x="170" y="56" width="74" height="6" fill="#cdc6bb"/>
+              <path d="M174 59 H240" stroke="#8d969e" stroke-width="1.4" stroke-dasharray="3 2"/>
+              <path d="M170 56 V168" stroke="#fff" stroke-opacity=".7" stroke-width=".8"/>
+              <!-- стилобат: стеклянное основание -->
+              <rect x="156" y="163" width="106" height="4" fill="#f1eee8"/>
+              <rect x="158" y="167" width="102" height="14" fill="url(#glass)"/>
+              <path d="M166 167 V181 M174 167 V181 M182 167 V181 M190 167 V181 M226 167 V181 M234 167 V181 M242 167 V181 M250 167 V181" stroke="#e8edf1" stroke-opacity=".55" stroke-width=".5"/>
+              <rect x="196" y="167" width="26" height="3.2" rx=".8" fill="#6a1424"/>
+              <rect x="202" y="170.2" width="14" height="10.8" fill="#33414f"/>
+              <rect x="208.6" y="170.2" width=".8" height="10.8" fill="#c9bfb1"/>
+              <!-- буквы на крыше -->
+              <path d="M188 48 V43 M226 48 V43" stroke="#6b6f74" stroke-width=".7"/>
+              <path d="M186 43.2 H228" stroke="#6b6f74" stroke-width=".6"/>
+              <text class="map__sign" x="207" y="42" text-anchor="middle">ВЕГА</text>
+            </g>
+
+            <!-- Измайловский кремль -->
+            <g class="map__kremlin">
+              <ellipse cx="341" cy="144" rx="52" ry="4" fill="#2a2e2a" fill-opacity=".12" filter="url(#softShadow)"/>
+              <rect x="296" y="118" width="90" height="24" fill="#f6f1e8" stroke="#c6b9a5" stroke-width=".7"/>
+              <g id="crenels" fill="#f6f1e8" stroke="#c6b9a5" stroke-width=".5"></g>
+              <path d="M334 142 V132 C334 127 348 127 348 132 V142 Z" fill="#7a4a2c"/>
+              <!-- левая башня -->
+              <rect x="294" y="96" width="16" height="46" fill="#f6f1e8" stroke="#c6b9a5" stroke-width=".7"/>
+              <path d="M291 97 L302 72 L313 97 Z" fill="#3d7a5d"/>
+              <path d="M298 82 L302 72 L306 82 Z" fill="#fbfaf6"/>
+              <rect x="300" y="104" width="4" height="7" rx="2" fill="#33414f"/>
+              <!-- малая башня -->
+              <rect x="314" y="106" width="12" height="14" fill="#f6f1e8" stroke="#c6b9a5" stroke-width=".6"/>
+              <path d="M312 107 L320 91 L328 107 Z" fill="#a3343f"/>
+              <!-- главная башня -->
+              <rect x="331" y="84" width="20" height="38" fill="#f6f1e8" stroke="#c6b9a5" stroke-width=".7"/>
+              <rect x="333" y="78" width="16" height="7" fill="#ece4d6" stroke="#c6b9a5" stroke-width=".6"/>
+              <path d="M330 79 L341 48 L352 79 Z" fill="#2f6a8f"/>
+              <path d="M336 63 L341 48 L346 63 Z" fill="#fbfaf6" fill-opacity=".9"/>
+              <rect x="338.5" y="92" width="5" height="9" rx="2.5" fill="#33414f"/>
+              <path d="M341 48 V36" stroke="#6b6f74" stroke-width=".8"/>
+              <path class="map__flag" d="M341 36.5 L352 39 L341 42 Z" fill="#6a1424"/>
+              <!-- правая башня -->
+              <rect x="372" y="96" width="16" height="46" fill="#f6f1e8" stroke="#c6b9a5" stroke-width=".7"/>
+              <path d="M369 97 L380 70 L391 97 Z" fill="#a3343f"/>
+              <path d="M376 80 L380 70 L384 80 Z" fill="#fbfaf6"/>
+              <rect x="378" y="104" width="4" height="7" rx="2" fill="#33414f"/>
+              <path d="M380 70 V61" stroke="#6b6f74" stroke-width=".7"/>
+              <path class="map__flag map__flag--2" d="M380 61.4 L388 63.2 L380 65.2 Z" fill="#1e4a3a"/>
+            </g>
+
+            <!-- метро «Партизанская» -->
+            <g class="map__metro">
+              <ellipse cx="74" cy="258" rx="38" ry="3.4" fill="#2a2e2a" fill-opacity=".12" filter="url(#softShadow)"/>
+              <rect x="40" y="234" width="66" height="22" fill="url(#bldFront)"/>
+              <rect x="36" y="229" width="74" height="6" rx="1" fill="#c8bfb1"/>
+              <rect x="36" y="229" width="74" height="2" rx="1" fill="#fbfaf6"/>
+              <rect x="48" y="240" width="10" height="16" fill="#33414f"/>
+              <rect x="62" y="240" width="10" height="16" fill="#33414f"/>
+              <rect x="76" y="240" width="10" height="16" fill="#33414f"/>
+              <rect x="90" y="240" width="10" height="16" fill="#33414f"/>
+              <path d="M124 258 V240" stroke="#6b6f74" stroke-width="1.3"/>
+              <circle cx="124" cy="236" r="9" fill="#c9302c" stroke="#fff" stroke-width="1"/>
+              <text class="map__m" x="124" y="240" text-anchor="middle">М</text>
+            </g>
+
+            <!-- путь гостей от метро к отелю -->
+            <path id="walk" class="map__walk" d="M134 246 C146 246 156 240 161 230 L161 190 C163 182 176 181 208 181" fill="none"/>
+            <g class="map__walkers">
+              <circle r="2.2" fill="#6a1424"><animateMotion dur="7s" repeatCount="indefinite" rotate="auto"><mpath href="#walk"/></animateMotion></circle>
+              <circle r="2.2" fill="#1e4a3a"><animateMotion dur="7s" begin="-.35s" repeatCount="indefinite" rotate="auto"><mpath href="#walk"/></animateMotion></circle>
+            </g>
+
+            <!-- машина жениха -->
+            <g class="map__car">
+              <g class="map__car-body">
+                <path class="map__beam" d="M13 -4.2 L46 -12 L46 12 L13 4.2 Z" fill="url(#beam)"/>
+                <rect x="-13" y="-6.4" width="26" height="12.8" rx="4" fill="#2a2e2a" fill-opacity=".25" transform="translate(1.4 1.6)" filter="url(#softShadow)"/>
+                <rect x="-10" y="-7.6" width="5" height="2" rx="1" fill="#1d1d1d"/><rect x="5" y="-7.6" width="5" height="2" rx="1" fill="#1d1d1d"/>
+                <rect x="-10" y="5.6" width="5" height="2" rx="1" fill="#1d1d1d"/><rect x="5" y="5.6" width="5" height="2" rx="1" fill="#1d1d1d"/>
+                <rect x="-13" y="-6.4" width="26" height="12.8" rx="4.2" fill="url(#carBody)"/>
+                <rect x="-6" y="-4.8" width="12" height="9.6" rx="2.4" fill="#4a0d1a"/>
+                <path d="M6.6 -4.6 L9.6 -3.6 V3.6 L6.6 4.6 Z" fill="#2c3a48"/>
+                <path d="M-6.6 -4.4 L-8.8 -3.6 V3.6 L-6.6 4.4 Z" fill="#2c3a48"/>
+                <circle cx="12.4" cy="-4.2" r="1.3" fill="#fff4cf"/><circle cx="12.4" cy="4.2" r="1.3" fill="#fff4cf"/>
+                <circle cx="-12.6" cy="-4.4" r="1" fill="#ff5a4a"/><circle cx="-12.6" cy="4.4" r="1" fill="#ff5a4a"/>
+              </g>
+              <path class="map__car-heart" d="M0 3.6 C-4.6 0.2 -6 -2.4 -4.2 -4.2 C-2.8 -5.6 -0.9 -5 0 -3.4 C0.9 -5 2.8 -5.6 4.2 -4.2 C6 -2.4 4.6 0.2 0 3.6 Z" fill="#6a1424"/>
+            </g>
+
+            <!-- метка на «Веге» -->
+            <g class="map__pin" transform="translate(0 -20)">
+              <ellipse class="map__pin-shadow" cx="209" cy="47" rx="5" ry="1.6" fill="#2a2e2a" fill-opacity=".3"/>
+              <ellipse class="map__pin-ring" cx="209" cy="47" rx="6" ry="2" fill="none" stroke="#6a1424" stroke-width="1"/>
+              <g class="map__pin-drop">
+                <path d="M209 46 C201.5 37 199.5 33 199.5 29.4 A9.5 9.5 0 1 1 218.5 29.4 C218.5 33 216.5 37 209 46 Z" fill="#6a1424"/>
+                <circle cx="209" cy="29.4" r="5.6" fill="#fbf6ee"/>
+                <path d="M209 32.6 C206.3 30.6 205.5 29.1 206.5 28 C207.3 27.2 208.5 27.5 209 28.4 C209.5 27.5 210.7 27.2 211.5 28 C212.5 29.1 211.7 30.6 209 32.6 Z" fill="#6a1424"/>
+              </g>
+            </g>
+
+            <!-- компас -->
+            <g class="map__compass" transform="translate(34 34)">
+              <circle r="15" fill="#fbf8f2" stroke="#1e4a3a" stroke-opacity=".35" stroke-width=".8"/>
+              <circle r="11.5" fill="none" stroke="#1e4a3a" stroke-opacity=".18" stroke-width=".5" stroke-dasharray="1.5 2"/>
+              <g class="map__needle">
+                <path d="M0 -10 L3 0 L-3 0 Z" fill="#6a1424"/>
+                <path d="M0 10 L3 0 L-3 0 Z" fill="#9aa39d"/>
+                <circle r="1.3" fill="#fbf8f2" stroke="#1e4a3a" stroke-width=".5"/>
+              </g>
+              <text class="map__n" y="-17.5" text-anchor="middle">С</text>
+            </g>
+
+            <!-- снег (скрипт) -->
+            <g id="snow"></g>
+          </g>
+
+
+          <!-- подписи -->
+          <g class="map__labels">
+            <text x="334" y="27" text-anchor="middle">Измайловский кремль</text>
+            <text x="74" y="281" text-anchor="middle">м. Партизанская</text>
+            <text x="306" y="308" text-anchor="middle" class="map__label--park">Измайловский парк</text>
+            <text x="140" y="266" class="map__note">пару минут</text>
+            <text x="140" y="281" class="map__note">пешком</text>
+          </g>
+        </svg>
+      </figure>
+    </section>
+
+    <!-- ============ ПРОГРАММА ============ -->
+    <section class="plan" id="plan" aria-labelledby="plan-title">
+      <h2 class="title" id="plan-title" data-reveal>Программа вечера</h2>
+      <div class="tl" id="timeline">
+        <div class="tl__track" aria-hidden="true">
+          <span class="tl__fill"></span>
+          <span class="tl__runner"><span class="tl__spark"></span></span>
+        </div>
+        <ol class="tl__list">
+          <li class="tl__item"><time>17:00</time><p>Сбор гостей на welcome-зоне</p></li>
+          <li class="tl__item"><time>17:30</time><p>Праздничный ужин</p></li>
+          <li class="tl__item"><time>22:00</time><p>Свадебный торт</p></li>
+          <li class="tl__item"><time>23:00</time><p>Окончание вечера</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ ДРЕСС-КОД ============ -->
+    <section class="dress" id="dress" aria-labelledby="dress-title">
+      <div class="dress__intro" data-reveal>
+        <h2 class="title" id="dress-title">Дресс-код</h2>
+        <p>Мы будем рады, если вы поддержите атмосферу нашего торжества и&nbsp;подберёте образы в&nbsp;этой цветовой гамме.</p>
+      </div>
+
+      <div class="rail" data-reveal>
+        <h3 class="rail__title">Для дам</h3>
+        <div data-silk="women"></div>
+      </div>
+
+      <div class="rail rail--men" data-reveal>
+        <h3 class="rail__title">Для джентльменов</h3>
+        <div data-silk="men"></div>
+        <p class="rail__note">Мужчины также могут дополнить свой образ белой или светлой рубашкой в&nbsp;сочетании с&nbsp;костюмом из&nbsp;нашей палитры.</p>
+      </div>
+
+      <a class="btn btn--ghost" id="pinterest-link" href="#" target="_blank" rel="noopener" hidden data-reveal>
+        <span>Вдохновение на Pinterest</span>
+        <span class="btn__ico"><svg class="ico" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M198,64V168a6,6,0,0,1-12,0V78.48L68.24,196.24a6,6,0,0,1-8.48-8.48L177.52,70H88a6,6,0,0,1,0-12H192A6,6,0,0,1,198,64Z"/></svg></span>
+      </a>
+    </section>
+
+    <!-- ============ ДЕТАЛИ ============ -->
+    <section class="details" id="details" aria-labelledby="details-title">
+      <h2 class="title" id="details-title" data-reveal>Детали</h2>
+      <div class="details__grid">
+        <article class="note" data-reveal>
+          <svg class="ico note__ico" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M224,50H32a6,6,0,0,0-6,6V192a14,14,0,0,0,14,14H216a14,14,0,0,0,14-14V56A6,6,0,0,0,224,50ZM208.58,62,128,135.86,47.42,62ZM216,194H40a2,2,0,0,1-2-2V69.64l86,78.78a6,6,0,0,0,8.1,0L218,69.64V192A2,2,0,0,1,216,194Z"/></svg>
+          <p>Самый главный и&nbsp;дорогой подарок для нас: ваши улыбки и&nbsp;искренняя радость. Но&nbsp;если вы всё&nbsp;же захотите нас поздравить, мы будем безмерно благодарны, если вы сделаете это в&nbsp;конверте.</p>
+        </article>
+        <article class="note note--wine" data-reveal>
+          <svg class="ico note__ico" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M203.41,104.23,181.64,30.3a6,6,0,0,0-5.75-4.3H80.11a6,6,0,0,0-5.75,4.3L52.59,104.23a61.48,61.48,0,0,0,16.87,62.65A85.35,85.35,0,0,0,122,189.77V234H88a6,6,0,1,0,0,12h80a6,6,0,1,0,0-12H134V189.77a85.38,85.38,0,0,0,52.54-22.89A61.48,61.48,0,0,0,203.41,104.23ZM84.6,38h86.8l20.51,69.63c.26.9.5,1.8.71,2.7-22.54,9.07-48.17-.73-61.91-7.68C104.1,89.17,83.48,88.34,68.83,91.52Zm93.75,120.11a73.67,73.67,0,0,1-100.7,0,49.53,49.53,0,0,1-13.56-50.48l.74-2.51c12.34-4.46,32.26-6.05,60.46,8.23,11,5.55,28.65,12.64,47.52,12.64A65.56,65.56,0,0,0,194,122.62,49.22,49.22,0,0,1,178.35,158.11Z"/></svg>
+          <p>А&nbsp;вместо цветов, которые, увы, недолговечны, лучше выберите бутылку хорошего вина или крепкого напитка. Мы обязательно откроем её за&nbsp;семейным ужином и с&nbsp;удовольствием вспомним о&nbsp;вас.</p>
+        </article>
+        <article class="note note--host" data-reveal>
+          <h3 class="note__title">Ведущий</h3>
+          <p>Если вы задумали сюрприз или особое поздравление, напишите нашему ведущему заранее. Мы будем только рады вашей инициативе!</p>
+          <a class="btn" id="host-link" href="#" target="_blank" rel="noopener">
+            <span>Telegram @mutenin</span>
+            <span class="btn__ico"><svg class="ico" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M227.57,27.7a7,7,0,0,0-7.13-1.22L17.78,105.79a12.23,12.23,0,0,0,2.1,23.39L74,139.81V200a14,14,0,0,0,24.08,9.71l26.64-27.63,41.58,36.45a13.9,13.9,0,0,0,9.2,3.49,14.33,14.33,0,0,0,4.36-.69,13.86,13.86,0,0,0,9.34-10.17L229.82,34.57A7,7,0,0,0,227.57,27.7ZM22.05,117.37h0a.46.46,0,0,1,0-.32.51.51,0,0,1,.15-.08L181.91,54.45l-103.3,74L22.2,117.41Zm67.39,84A2,2,0,0,1,86,200V148.11l29.69,26Zm88.07,7.08a1.93,1.93,0,0,1-1.34,1.44,2,2,0,0,1-2-.4L89.64,135.34,215,45.5Z"/></svg></span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ АНКЕТА ============ -->
+    <section class="rsvp" id="rsvp" aria-labelledby="rsvp-title">
+      <div class="rsvp__card" data-reveal>
+        <h2 class="title" id="rsvp-title">Анкета гостя</h2>
+        <p class="rsvp__lead">Мы стараемся сделать наш день особенным и&nbsp;будем признательны за&nbsp;ваше подтверждение присутствия до&nbsp;<b>30&nbsp;ноября 2026&nbsp;года</b>.</p>
+
+        <form class="form" id="rsvp-form" novalidate>
+          <div class="field">
+            <label for="guest-name">Ваше имя и фамилия</label>
+            <input id="guest-name" name="name" type="text" autocomplete="name" required aria-describedby="name-help">
+            <small class="field__help" id="name-help">Если придёте вместе, впишите оба имени</small>
+            <small class="field__error" id="name-error" hidden>Пожалуйста, укажите имя</small>
+          </div>
+
+          <fieldset class="choice" id="choice">
+            <legend>Ваш ответ</legend>
+            <label class="choice__opt">
+              <input type="radio" name="attendance" value="yes" required>
+              <span>С радостью приду</span>
+            </label>
+            <label class="choice__opt">
+              <input type="radio" name="attendance" value="no">
+              <span>К сожалению, не смогу</span>
+            </label>
+            <small class="field__error" id="choice-error" hidden>Выберите один из вариантов</small>
+          </fieldset>
+
+          <button class="btn btn--solid" type="submit" id="rsvp-submit">
+            <span class="btn__text">Отправить ответ</span>
+            <span class="btn__ico"><svg class="ico" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M225.88,30.12a13.83,13.83,0,0,0-13.7-3.58l-.11,0L20.14,84.77A14,14,0,0,0,18,110.85l85.56,41.64L145.12,238a13.87,13.87,0,0,0,12.61,8c.4,0,.81,0,1.21-.05a13.9,13.9,0,0,0,12.29-10.09l58.2-191.93,0-.11A13.83,13.83,0,0,0,225.88,30.12Zm-8,10.4L159.73,232.43l0,.11a2,2,0,0,1-3.76.26l-40.68-83.58,49-49a6,6,0,1,0-8.49-8.49l-49,49L23.15,100a2,2,0,0,1,.31-3.74l.11,0L215.48,38.08a1.94,1.94,0,0,1,1.92.52A2,2,0,0,1,217.92,40.52Z"/></svg></span>
+          </button>
+          <p class="form__status" id="rsvp-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="form__done" id="rsvp-done" hidden>
+          <p class="form__done-title" id="rsvp-done-title">Спасибо!</p>
+          <p id="rsvp-done-text"></p>
+          <button class="link" type="button" id="rsvp-again">Изменить ответ</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ФИНАЛ ============ -->
+    <section class="finale" id="finale" aria-labelledby="finale-title">
+      <h2 class="visually-hidden" id="finale-title">До встречи</h2>
+
+      <div class="pass" data-reveal>
+        <!-- основная часть талона -->
+        <div class="pass__card pass__card--main">
+          <div class="pass__band">
+            <span class="pass__airline">
+              <svg class="pass__logo" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1"/>
+                <path d="M4.5 13.5 C8 11 16 11 19.5 13.5" fill="none" stroke="currentColor" stroke-width=".8" stroke-opacity=".6"/>
+                <text x="12" y="11.2" text-anchor="middle">ОД</text>
+              </svg>
+              <span>Авиалинии<br><b>«Олег и Дарья»</b></span>
+            </span>
+            <span class="pass__kind">Посадочный талон<small>Boarding pass</small></span>
+          </div>
+
+          <div class="pass__route">
+            <div class="pass__city">
+              <b>MOW</b>
+              <span>Москва</span>
+            </div>
+            <svg class="pass__arc" viewBox="0 0 160 46" aria-hidden="true">
+              <path id="arc" d="M10 40 C40 2 120 2 150 40" fill="none"/>
+              <path class="pass__trail" d="M10 40 C40 2 120 2 150 40" fill="none" pathLength="1"/>
+              <circle cx="10" cy="40" r="2.4" class="pass__dot"/>
+              <circle cx="150" cy="40" r="2.4" class="pass__dot pass__dot--to"/>
+              <g class="pass__plane">
+                <path transform="rotate(90) scale(.065) translate(-128 -128)" d="M240,136v32a8,8,0,0,1-8,8,7.610,7.610,0,0,1-1.57-.16L156,161v23.73l17.66,17.65A8,8,0,0,1,176,208v24a8,8,0,0,1-11,7.43l-37-14.810L91,239.43A8,8,0,0,1,80,232V208a8,8,0,0,1,2.34-5.660L100,184.69V161L25.57,175.84A7.610,7.610,0,0,1,24,176a8,8,0,0,1-8-8V136a8,8,0,0,1,4.42-7.160L100,89.06V44a28,28,0,0,1,56,0V89.06l79.58,39.78A8,8,0,0,1,240,136Z"/>
+                <animateMotion id="fly" dur="3.4s" begin="indefinite" fill="freeze" rotate="auto" calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines=".7 0 .2 1"><mpath href="#arc"/></animateMotion>
+              </g>
+            </svg>
+            <div class="pass__city pass__city--to">
+              <b>NEW</b>
+              <span>Новая глава</span>
+            </div>
+          </div>
+
+          <div class="pass__times">
+            <div><small>Вылет</small><b>17:00</b></div>
+            <span class="pass__dur">в пути: вся жизнь</span>
+            <div class="pass__times-to"><small>Прибытие</small><b>навсегда</b></div>
+          </div>
+
+          <dl class="pass__meta">
+            <div class="pass__wide"><dt>Пассажир</dt><dd>Самый дорогой гость</dd>
+              <!-- печать «посадка разрешена» -->
+              <svg class="pass__stamp" viewBox="0 0 120 120" aria-hidden="true">
+                <defs>
+                  <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+                    <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="5" result="n"/>
+                    <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"/>
+                    <feComponentTransfer><feFuncA type="discrete" tableValues="0 .85 .95 1"/></feComponentTransfer>
+                  </filter>
+                  <path id="stampRing" d="M60 60 m-41 0 a41 41 0 1 1 82 0 a41 41 0 1 1 -82 0"/>
+                </defs>
+                <g filter="url(#ink)" fill="none" stroke="currentColor">
+                  <circle cx="60" cy="60" r="55" stroke-width="3"/>
+                  <circle cx="60" cy="60" r="49" stroke-width="1.1"/>
+                  <circle cx="60" cy="60" r="31" stroke-width="1.1"/>
+                  <text class="pass__stamp-ring" fill="currentColor" stroke="none"><textPath href="#stampRing" startOffset="0">ПОСАДКА РАЗРЕШЕНА • 12.12.2026 •</textPath></text>
+                  <path d="M60 70 C50 63 47 58 50.5 54.2 C53.3 51.2 57.8 52 60 55.6 C62.2 52 66.7 51.2 69.5 54.2 C73 58 70 63 60 70 Z" fill="currentColor" stroke="none"/>
+                  <text class="pass__stamp-mid" x="60" y="47" text-anchor="middle" fill="currentColor" stroke="none">ЖДЁМ</text>
+                  <text class="pass__stamp-mid" x="60" y="81" text-anchor="middle" fill="currentColor" stroke="none">ВАС</text>
+                </g>
+              </svg>
+            </div>
+            <div><dt>Рейс</dt><dd>OD&nbsp;1212</dd></div>
+            <div><dt>Дата</dt><dd>12&nbsp;дек&nbsp;2026</dd></div>
+            <div><dt>Посадка</dt><dd>17:00</dd></div>
+            <div><dt>Выход</dt><dd>Вега Малая</dd></div>
+            <div><dt>Место</dt><dd>Рядом с нами</dd></div>
+            <div><dt>Класс</dt><dd>Семейный</dd></div>
+          </dl>
+
+        </div>
+
+        <!-- отрывной корешок -->
+        <div class="pass__card pass__card--stub">
+          <div class="pass__stub-head">
+            <small>До вылета</small>
+            <small class="pass__gate">Выход «Вега»</small>
+          </div>
+          <div class="count" id="countdown" aria-live="off">
+            <div><b data-u="d">00</b><span data-l="d">дней</span></div>
+            <div><b data-u="h">00</b><span data-l="h">часов</span></div>
+            <div><b data-u="m">00</b><span data-l="m">минут</span></div>
+            <div><b data-u="s">00</b><span data-l="s">секунд</span></div>
+          </div>
+          <div class="pass__barcode">
+            <svg id="barcode" viewBox="0 0 300 46" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <span class="pass__scan" aria-hidden="true"></span>
+          </div>
+          <div class="pass__fine"><span>OD 1212</span><span>MOW → NEW</span><span>SEQ 0012</span></div>
+        </div>
+      </div>
+
+      <p class="finale__text" data-reveal>Этот зимний вечер станет для нас по-настоящему тёплым, если вы будете рядом. До&nbsp;скорой встречи!</p>
+      <p class="finale__sign" data-reveal>Олег и Дарья</p>
+    </section>
+  </main>
+
+  <div class="heartbeat heartbeat--end" aria-hidden="true">
+    <span class="heartbeat__ring"></span>
+    <svg class="heartbeat__heart" viewBox="0 0 256 256"><path d="M240,102c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,228.66,16,172,16,102A62.07,62.07,0,0,1,78,40c20.65,0,38.73,8.88,50,23.89C139.27,48.88,157.35,40,178,40A62.07,62.07,0,0,1,240,102Z"/></svg>
+  </div>
+
+  <footer class="foot">12.12.2026</footer>
+
+  <script src="js/main.js?v=20261017e"></script>
+</body>
+</html>
