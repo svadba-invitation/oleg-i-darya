@@ -7,7 +7,7 @@ const CONFIG = {
   weddingISO: '2026-12-12T17:00:00+03:00',
 
   /** Адрес веб-приложения Google Apps Script для анкеты (см. README). */
-  rsvpEndpoint: '',
+  rsvpEndpoint: 'https://script.google.com/macros/s/AKfycbzElF3ndf4R6Znrm_zNFGTnGSeEFFLVpueQY5FJoD6oyBp4Ufb3OqSAqPULdbAqxT3tSg/exec',
 
   /** Ссылка на доску Pinterest. Пустая строка = кнопка скрыта. */
   pinterestUrl: '',
