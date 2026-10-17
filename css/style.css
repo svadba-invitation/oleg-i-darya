@@ -660,8 +660,8 @@ body { --end-gap: clamp(48px, 12vw, 64px); }
 .cal__d.is-day { color: var(--wine); font-weight: 600; }
 .cal__ring {
   position: absolute; left: 50%; top: 50%;
-  width: 180%; height: 150%;
-  transform: translate(-50%, -52%) rotate(-6deg);
+  width: 168%; height: 168%;
+  transform: translate(-50%, -45%) rotate(-4deg);
   overflow: visible; pointer-events: none;
 }
 .cal__ring path {

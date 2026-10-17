@@ -811,7 +811,7 @@ flyIO.observe(pass);
     if (d === 12) {
       c.classList.add('is-day');
       c.insertAdjacentHTML('beforeend',
-        '<svg class="cal__ring" viewBox="0 0 60 48" aria-hidden="true"><path pathLength="1" d="M10 24 C8 10 24 4 34 5 C48 6 56 15 54 27 C52 39 38 45 26 43 C14 41 5 33 9 21 C11 15 17 10 23 8"/></svg>');
+        '<svg class="cal__ring" viewBox="0 0 60 56" aria-hidden="true"><path pathLength="1" d="M31 49 C24 42 8 33 6.6 20.6 C5.4 10.4 12.4 4.6 19.4 5.4 C25.4 6 29 10.6 30.6 15.6 C32.4 10 36.6 5 43 4.8 C50.4 4.6 56.2 10.6 54.6 20.4 C52.8 32 38 42 30 50.6 C29 51.6 27.6 50.4 28.4 49.2"/></svg>');
     }
     grid.append(c);
   }
