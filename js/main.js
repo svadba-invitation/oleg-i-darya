@@ -971,7 +971,7 @@ $$('[data-silk]').forEach((host) => {
         toast.textContent = 'Трек не найден';
         toast.classList.add('is-on');
         setTimeout(() => { toast.classList.remove('is-on'); }, 2400);
-        console.warn('Положите файл песни в audio/music.mp3', err);
+        console.warn('Не удалось включить audio/music.m4a', err);
       }
     } else {
       setState(false);

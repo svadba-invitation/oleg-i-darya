@@ -13,8 +13,8 @@
   <link rel="preload" href="fonts/YsabeauOffice-normal-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/GreatVibes-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="img/seal.webp" as="image" type="image/webp">
-  <link rel="stylesheet" href="css/fonts.css?v=20261017C">
-  <link rel="stylesheet" href="css/style.css?v=20261017C">
+  <link rel="stylesheet" href="css/fonts.css?v=20261017G">
+  <link rel="stylesheet" href="css/style.css?v=20261017G">
 </head>
 <body class="is-locked">
 
@@ -61,7 +61,7 @@
     <svg class="music__note" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M210.3,56.34l-80-24A8,8,0,0,0,120,40V148.26A48,48,0,1,0,136,184V98.75l69.7,20.91A8,8,0,0,0,216,112V64A8,8,0,0,0,210.3,56.34Z"/></svg>
     <span class="music__toast" role="status"></span>
   </button>
-  <audio id="track" src="audio/music.mp3" preload="none" loop></audio>
+  <audio id="track" src="audio/music.m4a" preload="none" loop></audio>
 
   <main id="page" inert>
 
@@ -76,8 +76,8 @@
 
       <figure class="hearth" id="hearth" data-hero="5">
         <div class="hearth__halo" aria-hidden="true"></div>
-        <!-- детские фото над камином: вылетают с краёв экрана -->
-        <figure class="polaroid polaroid--l">
+        <!-- фото приколоты к камину: слева детские, справа совместные; прилетают с краёв -->
+        <figure class="polaroid polaroid--l" style="--pd:1.5s">
           <div class="polaroid__card">
             <span class="polaroid__tape polaroid__tape--wine" aria-hidden="true"></span>
             <picture>
@@ -87,12 +87,32 @@
           </div>
           <span class="sparks" aria-hidden="true"><i class="spark" style="--sx:-6%;--sy:10%;--dx:-14px;--dy:-12px;--sd:0s;--ss:1"></i><i class="spark" style="--sx:50%;--sy:-8%;--dx:0px;--dy:-18px;--sd:0.08s;--ss:0.8"></i><i class="spark" style="--sx:106%;--sy:14%;--dx:16px;--dy:-10px;--sd:0.04s;--ss:1.1"></i><i class="spark" style="--sx:108%;--sy:62%;--dx:18px;--dy:6px;--sd:0.12s;--ss:0.7"></i><i class="spark" style="--sx:96%;--sy:104%;--dx:12px;--dy:16px;--sd:0.06s;--ss:0.9"></i><i class="spark" style="--sx:40%;--sy:108%;--dx:-4px;--dy:18px;--sd:0.1s;--ss:0.8"></i><i class="spark" style="--sx:-8%;--sy:72%;--dx:-16px;--dy:8px;--sd:0.14s;--ss:1"></i><i class="spark" style="--sx:22%;--sy:-6%;--dx:-8px;--dy:-16px;--sd:0.18s;--ss:0.6"></i><i class="spark" style="--sx:78%;--sy:-4%;--dx:10px;--dy:-16px;--sd:0.02s;--ss:0.7"></i><i class="spark" style="--sx:-4%;--sy:40%;--dx:-18px;--dy:-2px;--sd:0.2s;--ss:0.6"></i></span>
         </figure>
-        <figure class="polaroid polaroid--r">
+        <figure class="polaroid polaroid--r" style="--pd:1.7s">
           <div class="polaroid__card">
             <span class="polaroid__tape polaroid__tape--green" aria-hidden="true"></span>
             <picture>
               <source srcset="img/photo-darya.webp?v=2" type="image/webp">
               <img src="img/photo-darya.jpg?v=2" alt="Дарья в детстве" width="705" height="850" decoding="async">
+            </picture>
+          </div>
+          <span class="sparks" aria-hidden="true"><i class="spark" style="--sx:-6%;--sy:10%;--dx:-14px;--dy:-12px;--sd:0s;--ss:1"></i><i class="spark" style="--sx:50%;--sy:-8%;--dx:0px;--dy:-18px;--sd:0.08s;--ss:0.8"></i><i class="spark" style="--sx:106%;--sy:14%;--dx:16px;--dy:-10px;--sd:0.04s;--ss:1.1"></i><i class="spark" style="--sx:108%;--sy:62%;--dx:18px;--dy:6px;--sd:0.12s;--ss:0.7"></i><i class="spark" style="--sx:96%;--sy:104%;--dx:12px;--dy:16px;--sd:0.06s;--ss:0.9"></i><i class="spark" style="--sx:40%;--sy:108%;--dx:-4px;--dy:18px;--sd:0.1s;--ss:0.8"></i><i class="spark" style="--sx:-8%;--sy:72%;--dx:-16px;--dy:8px;--sd:0.14s;--ss:1"></i><i class="spark" style="--sx:22%;--sy:-6%;--dx:-8px;--dy:-16px;--sd:0.18s;--ss:0.6"></i><i class="spark" style="--sx:78%;--sy:-4%;--dx:10px;--dy:-16px;--sd:0.02s;--ss:0.7"></i><i class="spark" style="--sx:-4%;--sy:40%;--dx:-18px;--dy:-2px;--sd:0.2s;--ss:0.6"></i></span>
+        </figure>
+        <figure class="polaroid polaroid--rr2" style="--pd:1.9s">
+          <div class="polaroid__card">
+            <span class="polaroid__tape polaroid__tape--wine" aria-hidden="true"></span>
+            <picture>
+              <source srcset="img/photo-selfie.webp" type="image/webp">
+              <img src="img/photo-selfie.jpg" alt="Олег и Дарья, селфи у набережной" width="705" height="850" decoding="async">
+            </picture>
+          </div>
+          <span class="sparks" aria-hidden="true"><i class="spark" style="--sx:-6%;--sy:10%;--dx:-14px;--dy:-12px;--sd:0s;--ss:1"></i><i class="spark" style="--sx:50%;--sy:-8%;--dx:0px;--dy:-18px;--sd:0.08s;--ss:0.8"></i><i class="spark" style="--sx:106%;--sy:14%;--dx:16px;--dy:-10px;--sd:0.04s;--ss:1.1"></i><i class="spark" style="--sx:108%;--sy:62%;--dx:18px;--dy:6px;--sd:0.12s;--ss:0.7"></i><i class="spark" style="--sx:96%;--sy:104%;--dx:12px;--dy:16px;--sd:0.06s;--ss:0.9"></i><i class="spark" style="--sx:40%;--sy:108%;--dx:-4px;--dy:18px;--sd:0.1s;--ss:0.8"></i><i class="spark" style="--sx:-8%;--sy:72%;--dx:-16px;--dy:8px;--sd:0.14s;--ss:1"></i><i class="spark" style="--sx:22%;--sy:-6%;--dx:-8px;--dy:-16px;--sd:0.18s;--ss:0.6"></i><i class="spark" style="--sx:78%;--sy:-4%;--dx:10px;--dy:-16px;--sd:0.02s;--ss:0.7"></i><i class="spark" style="--sx:-4%;--sy:40%;--dx:-18px;--dy:-2px;--sd:0.2s;--ss:0.6"></i></span>
+        </figure>
+        <figure class="polaroid polaroid--rr1" style="--pd:2.3s">
+          <div class="polaroid__card">
+            <span class="polaroid__tape polaroid__tape--green" aria-hidden="true"></span>
+            <picture>
+              <source srcset="img/photo-winter.webp" type="image/webp">
+              <img src="img/photo-winter.jpg" alt="Олег и Дарья зимой на берегу реки" width="705" height="850" decoding="async">
             </picture>
           </div>
           <span class="sparks" aria-hidden="true"><i class="spark" style="--sx:-6%;--sy:10%;--dx:-14px;--dy:-12px;--sd:0s;--ss:1"></i><i class="spark" style="--sx:50%;--sy:-8%;--dx:0px;--dy:-18px;--sd:0.08s;--ss:0.8"></i><i class="spark" style="--sx:106%;--sy:14%;--dx:16px;--dy:-10px;--sd:0.04s;--ss:1.1"></i><i class="spark" style="--sx:108%;--sy:62%;--dx:18px;--dy:6px;--sd:0.12s;--ss:0.7"></i><i class="spark" style="--sx:96%;--sy:104%;--dx:12px;--dy:16px;--sd:0.06s;--ss:0.9"></i><i class="spark" style="--sx:40%;--sy:108%;--dx:-4px;--dy:18px;--sd:0.1s;--ss:0.8"></i><i class="spark" style="--sx:-8%;--sy:72%;--dx:-16px;--dy:8px;--sd:0.14s;--ss:1"></i><i class="spark" style="--sx:22%;--sy:-6%;--dx:-8px;--dy:-16px;--sd:0.18s;--ss:0.6"></i><i class="spark" style="--sx:78%;--sy:-4%;--dx:10px;--dy:-16px;--sd:0.02s;--ss:0.7"></i><i class="spark" style="--sx:-4%;--sy:40%;--dx:-18px;--dy:-2px;--sd:0.2s;--ss:0.6"></i></span>
@@ -838,6 +858,6 @@
 
   <footer class="foot">12.12.2026</footer>
 
-  <script src="js/main.js?v=20261017C"></script>
+  <script src="js/main.js?v=20261017G"></script>
 </body>
 </html>

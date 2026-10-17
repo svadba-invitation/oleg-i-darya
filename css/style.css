@@ -393,11 +393,11 @@ section { padding: var(--section) var(--gutter) 0; }
 .hearth {
   --glow: .85;
   position: relative;
-  /* на 10% меньше прежнего и опущен на 50% своей высоты */
+  /* на 10% меньше прежнего и опущен на 40% своей высоты */
   --hw: min(86.4vw, 387px);
   width: var(--hw);
   aspect-ratio: 360 / 280;
-  margin: calc(var(--hw) * 280 / 360 * .5) 0 0;
+  margin: calc(var(--hw) * 280 / 360 * .4) 0 0;
 }
 .hearth__layer { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 
@@ -405,16 +405,19 @@ section { padding: var(--section) var(--gutter) 0; }
    внутренняя карточка потом мягко покачивается на скотче. */
 .polaroid {
   position: absolute; z-index: 3; margin: 0;
-  width: 29.7%; bottom: 98%;
+  /* приколоты к фризу камина слева */
+  width: 12.4%; top: 31.5%;
   opacity: 0;
 }
-.polaroid--l { left: 12%; --rot: -7deg; --from: -175%; --spin: -38deg; }
-.polaroid--r { right: 12%; --rot: 6deg; --from: 175%; --spin: 38deg; }
+.polaroid--l { left: 10.6%; --rot: 9deg; --from: -520%; --spin: -60deg; }
+.polaroid--r { left: 24.2%; --rot: -8deg; --from: -640%; --spin: -45deg; }
+.polaroid--rr2 { right: 24.2%; --rot: 8deg; --from: 640%; --spin: 45deg; }
+.polaroid--rr1 { right: 10.6%; --rot: -9deg; --from: 520%; --spin: 60deg; }
 .polaroid__card {
   position: relative;
   transform: rotate(var(--rot));
   transform-origin: 50% 0;
-  filter: drop-shadow(0 6px 8px rgba(60, 30, 20, .22)) drop-shadow(0 1px 1.5px rgba(60, 30, 20, .25));
+  filter: drop-shadow(0 3px 4px rgba(10, 20, 15, .35)) drop-shadow(0 1px 1px rgba(10, 20, 15, .3));
 }
 .polaroid img { display: block; width: 100%; height: auto; border-radius: 1px; }
 .polaroid__tape {
@@ -432,12 +435,9 @@ section { padding: var(--section) var(--gutter) 0; }
   background-size: 260% 100%; background-position: 130% 0;
   pointer-events: none; mix-blend-mode: screen;
 }
-body.is-ready .polaroid { animation: polaroidIn 3.2s cubic-bezier(.25, .8, .3, 1.04) 1.5s both; }
-body.is-ready .polaroid__card { animation: polaroidSway 6.5s ease-in-out 4.8s infinite; }
-body.is-ready .polaroid__card::after { animation: polaroidGloss 7s ease-in-out 4.4s infinite; }
-body.is-ready .polaroid--r { animation-delay: 1.9s; }
-body.is-ready .polaroid--r .polaroid__card { animation-delay: 5.2s; }
-body.is-ready .polaroid--r .polaroid__card::after { animation-delay: 4.8s; }
+body.is-ready .polaroid { animation: polaroidIn 3.2s cubic-bezier(.25, .8, .3, 1.04) var(--pd, 1.5s) both; }
+body.is-ready .polaroid__card { animation: polaroidSway 6.5s ease-in-out calc(var(--pd, 1.5s) + 3.3s) infinite; }
+body.is-ready .polaroid__card::after { animation: polaroidGloss 7s ease-in-out calc(var(--pd, 1.5s) + 2.9s) infinite; }
 @keyframes polaroidIn {
   0% { opacity: 0; transform: translate(var(--from), -40%) rotate(var(--spin)) scale(.55); }
   55% { opacity: 1; transform: translate(calc(var(--from) * -.04), 4%) rotate(calc(var(--spin) * -.1)) scale(1.06); }
@@ -456,14 +456,13 @@ body.is-ready .polaroid--r .polaroid__card::after { animation-delay: 4.8s; }
 .sparks { position: absolute; inset: 0; pointer-events: none; filter: drop-shadow(0 0 3px rgba(255, 214, 130, .95)); }
 .spark {
   position: absolute; left: var(--sx); top: var(--sy);
-  width: 15px; height: 15px; margin: -7.5px 0 0 -7.5px;
+  width: 10px; height: 10px; margin: -5px 0 0 -5px;
   background: radial-gradient(circle, #fff8e1 0 18%, #f3cf7f 40%, #d49a3a 70%);
   clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
   opacity: 0; transform: scale(0);
 }
 /* искры только один раз, при приземлении снимка */
-body.is-ready .spark { animation: sparkBurst 5.5s ease-out 1 both; animation-delay: calc(3.3s + var(--sd)); }
-body.is-ready .polaroid--r .spark { animation-delay: calc(3.7s + var(--sd)); }
+body.is-ready .spark { animation: sparkBurst 5.5s ease-out 1 both; animation-delay: calc(var(--pd, 1.5s) + 1.8s + var(--sd)); }
 @keyframes sparkBurst {
   0% { opacity: 0; transform: translate(0, 0) scale(0) rotate(0); }
   6% { opacity: 1; transform: translate(calc(var(--dx) * .5), calc(var(--dy) * .5)) scale(calc(var(--ss) * 1.25)) rotate(45deg); }
