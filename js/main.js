@@ -546,6 +546,251 @@ flyIO.observe(pass);
 })();
 
 /* =========================================================================
+   ТАНЦУЮЩИЕ ПАРЫ ПОД ДРЕСС-КОДОМ: вальс в цветах палитры
+   ========================================================================= */
+(function dancers() {
+  const scene = $('#dance');
+  if (!scene) return;
+  const svg = $('#dance-svg');
+  const shade = (hex, k) => {
+    const c = hexToRgb(hex);
+    return rgb(k >= 0 ? mix(c, [255, 252, 246], k) : mix(c, [10, 8, 10], -k));
+  };
+
+  /* гирлянда провисает между шторами, огоньки мерцают */
+  const gx0 = 52, gx1 = 348, gy = 12, sag = 30;
+  const gp = (t) => {
+    const x = gx0 + (gx1 - gx0) * t;
+    const y = gy + 4 * sag * t * (1 - t);
+    return [x, y];
+  };
+  const grnd = seeded(77);
+  const greens = ['#0c271d', '#123426', '#18402f', '#1f4c39', '#2a5d47', '#3a7258'];
+  const strokes = greens.map(() => '');
+  for (let i = 0; i < 380; i++) {
+    const t = grnd();
+    const [x, y] = gp(t);
+    const ang = Math.PI / 2 + (grnd() - .5) * 3.2;
+    const len = 3.5 + grnd() * 4.5;
+    const ci = Math.min(greens.length - 1, Math.floor(grnd() * greens.length));
+    strokes[ci] += `M${(x + (grnd() - .5) * 3).toFixed(1)} ${(y + (grnd() - .5) * 4).toFixed(1)}l${(Math.cos(ang) * len).toFixed(1)} ${(Math.sin(ang) * len).toFixed(1)}`;
+  }
+  let gar = `<path d="M${gx0} ${gy} Q200 ${gy + sag * 2} ${gx1} ${gy}" stroke="#173a2c" stroke-width="3" fill="none"/>`
+    + strokes.map((d, i) => `<path d="${d}" stroke="${greens[i]}" stroke-width="${1.1 - i * .06}" stroke-linecap="round" fill="none"/>`).join('');
+  for (let i = 1; i < 14; i++) {
+    const [x, y] = gp(i / 14);
+    const d = (-(i * .37) % 3).toFixed(2);
+    gar += i % 3 === 0
+      ? `<circle cx="${x.toFixed(1)}" cy="${(y + 4).toFixed(1)}" r="3.2" fill="url(#bauble)"/>`
+      : `<g class="g-light" style="--d:${d}s;--td:${(2.2 + (i % 4) * .5).toFixed(1)}s"><circle cx="${x.toFixed(1)}" cy="${(y + 2).toFixed(1)}" r="4" fill="url(#lightG)"/><circle cx="${x.toFixed(1)}" cy="${(y + 2).toFixed(1)}" r="1" fill="#fff4d6"/></g>`;
+  }
+  $('#danceGarland').innerHTML = gar;
+
+  /* канделябры с бордовыми свечами */
+  const candel = (c) => {
+    const flame = (x, top, delay) => `<g style="--d:${delay}s;--fd:2.3s;--gd:3s">
+      <circle class="candle__glow" cx="${x}" cy="${top - 6}" r="9" fill="url(#fGlow)"/>
+      <g class="candle__flame"><path d="M${x} ${top - 1.5} C${x - 2.4} ${top - 3.4} ${x - 2.1} ${top - 7.6} ${x} ${top - 12} C${x + 2.1} ${top - 7.6} ${x + 2.4} ${top - 3.4} ${x} ${top - 1.5} Z" fill="url(#flameG)"/>
+      <ellipse cx="${x}" cy="${top - 4.6}" rx=".8" ry="2" fill="#fffbea"/></g></g>`;
+    const candle = (x, top, bottom) => `<rect x="${x - 2.6}" y="${top}" width="5.2" height="${bottom - top}" rx="1" fill="url(#candleWax)"/><path d="M${x} ${top} v-2" stroke="#2a221c" stroke-width=".7"/>`;
+    return `<ellipse cx="${c}" cy="229" rx="11" ry="2.6" fill="#2a221c" fill-opacity=".5"/>
+      <path d="M${c - 6} 228 Q${c} 220 ${c + 6} 228 Z" fill="url(#bronze)"/>
+      <rect x="${c - 1.3}" y="160" width="2.6" height="64" fill="url(#bronze)"/>
+      <ellipse cx="${c}" cy="190" rx="3" ry="2" fill="url(#bronze)"/>
+      <path d="M${c - 17} 156 Q${c - 16} 170 ${c} 168 Q${c + 16} 170 ${c + 17} 156" stroke="url(#bronze)" stroke-width="2.2" fill="none"/>
+      <rect x="${c - 20}" y="154" width="6" height="2.6" rx="1" fill="url(#bronze)"/><rect x="${c + 14}" y="154" width="6" height="2.6" rx="1" fill="url(#bronze)"/><rect x="${c - 3}" y="158" width="6" height="2.6" rx="1" fill="url(#bronze)"/>
+      ${candle(c - 17, 138, 154)}${candle(c, 128, 158)}${candle(c + 17, 140, 154)}
+      ${flame(c - 17, 136, -.3)}${flame(c, 126, -1.1)}${flame(c + 17, 138, -.7)}`;
+  };
+  $('#candelabras').innerHTML = candel(72) + candel(328);
+
+  /* Пары: торсы развёрнуты к зрителю, головы в профиль друг к другу.
+     Каждая рука растёт из своего плеча: плечо, локоть, запястье, кисть.
+     Плечи кавалера: L(-27,-114.5) R(-6,-114.5); дамы: L(9.6,-112.6) R(22.4,-112.6). */
+  const SH = { mL: [-27, -114.5], mR: [-6, -114.5], wL: [9.6, -112.6], wR: [22.4, -112.6] };
+
+  const limb = ({ from, elbow, wrist, upper, fore, col, cuff, hand, handCol, hidden }) => {
+    const [sx, sy] = from, [ex, ey] = elbow, [wx, wy] = wrist;
+    const ang = Math.atan2(wy - ey, wx - ex);
+    const deg = (ang * 180 / Math.PI).toFixed(1);
+    const hx = wx + Math.cos(ang) * 2.4, hy = wy + Math.sin(ang) * 2.4;
+    let out = `<path d="M${sx} ${sy} L${ex} ${ey}" stroke="${col}" stroke-width="${upper}" stroke-linecap="round" fill="none"/>`
+      + `<path d="M${ex} ${ey} L${wx} ${wy}" stroke="${col}" stroke-width="${fore}" stroke-linecap="round" fill="none"/>`;
+    if (hidden) return out;
+    if (cuff) {
+      const cx = wx - Math.cos(ang) * .9, cy = wy - Math.sin(ang) * .9;
+      out += `<path d="M${cx.toFixed(1)} ${cy.toFixed(1)} L${wx} ${wy}" stroke="${cuff}" stroke-width="${(fore - .4).toFixed(1)}" stroke-linecap="round"/>`;
+    }
+    if (hand !== false) {
+      out += `<ellipse cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" rx="2.6" ry="1.6" fill="${handCol}" transform="rotate(${deg} ${hx.toFixed(1)} ${hy.toFixed(1)})"/>`
+        + `<ellipse cx="${(hx + Math.cos(ang - 1.2) * 1.4).toFixed(1)}" cy="${(hy + Math.sin(ang - 1.2) * 1.4).toFixed(1)}" rx="1.2" ry=".7" fill="${handCol}" transform="rotate(${(+deg - 50).toFixed(1)} ${(hx + Math.cos(ang - 1.2) * 1.4).toFixed(1)} ${(hy + Math.sin(ang - 1.2) * 1.4).toFixed(1)})"/>`;
+    }
+    return out;
+  };
+
+  /* удлиняет руку на k: свободная рука тянется дальше, у держащей
+     ладонь остаётся на месте, а локоть сгибается сильнее */
+  const longer = (o, k = 1.15) => {
+    const [sx, sy] = o.from, [ex, ey] = o.elbow, [wx, wy] = o.wrist;
+    const L1 = Math.hypot(ex - sx, ey - sy) * k, L2 = Math.hypot(wx - ex, wy - ey) * k;
+    if (!o.fixed) {
+      const e2 = [sx + (ex - sx) * k, sy + (ey - sy) * k];
+      return { ...o, elbow: e2.map((v) => +v.toFixed(1)), wrist: [e2[0] + (wx - ex) * k, e2[1] + (wy - ey) * k].map((v) => +v.toFixed(1)) };
+    }
+    const d = Math.hypot(wx - sx, wy - sy);
+    if (d >= L1 + L2) return o;
+    const a = (L1 * L1 - L2 * L2 + d * d) / (2 * d), h = Math.sqrt(Math.max(0, L1 * L1 - a * a));
+    const mx = sx + a * (wx - sx) / d, my = sy + a * (wy - sy) / d;
+    const c1 = [mx + h * (wy - sy) / d, my - h * (wx - sx) / d], c2 = [mx - h * (wy - sy) / d, my + h * (wx - sx) / d];
+    const pick = Math.hypot(c1[0] - ex, c1[1] - ey) < Math.hypot(c2[0] - ex, c2[1] - ey) ? c1 : c2;
+    return { ...o, elbow: pick.map((v) => +v.toFixed(1)) };
+  };
+
+  const couple = (p, idx) => {
+    const { x, y, s, dress, suit, hairM, hairW, skin, delay, pose } = p;
+    const spin = pose === 'arch';
+    const id = `cp${idx}`;
+    const dHi = shade(dress, .42), dLo = shade(dress, -.34), dDeep = shade(dress, -.5);
+    const sHi = shade(suit, suit === '#1A1A1A' ? .14 : .22), sLo = shade(suit, -.28);
+    const lapel = suit === '#1A1A1A' ? '#343434' : shade(suit, .3);
+    const kHi = shade(skin, .25), kLo = shade(skin, -.18);
+    const shirt = '#f6f3ec';
+    const shoe = '#cfae7c', shoeHi = '#f6e3bf';
+    const sleeve = `url(#${id}s)`;
+    const mArm = (o) => limb({ upper: 6.2, fore: 5.2, col: sleeve, cuff: shirt, handCol: skin, ...o });
+    const wArm = (o) => limb({ upper: 3.4, fore: 2.8, col: skin, handCol: skin, ...longer(o) });
+    const wx = pose === 'embrace' ? -3 : 0;          // в объятии дама ближе к кавалеру
+    const W = ([a, b]) => [a + wx, b];
+
+    /* три разных хвата */
+    const arms = {
+      arch: {
+        back: '',
+        manFront: mArm({ from: SH.mL, elbow: [-35, -100], wrist: [-27.6, -87.6], hand: false })
+          + `<ellipse cx="-26.8" cy="-86.6" rx="2.6" ry="1.8" fill="${skin}"/>`,
+        front: mArm({ from: SH.mR, elbow: [-1.4, -130], wrist: [-1.8, -144.6], hand: false })
+          + wArm({ from: SH.wL, elbow: [8.4, -130], wrist: [2.2, -146.4], hand: false, fixed: true })
+          + wArm({ from: SH.wR, elbow: [28, -100.6], wrist: [31.6, -89.6] })
+          + `<ellipse cx="-1.6" cy="-148.6" rx="2.4" ry="3" fill="${kLo}"/><ellipse cx=".9" cy="-149.4" rx="2.6" ry="1.5" fill="${skin}" transform="rotate(-24 .9 -149.4)"/>`,
+      },
+      promenade: {
+        back: mArm({ from: SH.mL, elbow: [-31.6, -98.6], wrist: [-23, -92], hidden: true }),
+        manFront: '',
+        front: mArm({ from: SH.mR, elbow: [-3.4, -100], wrist: [1.6, -89.6], hand: false })
+          + wArm({ from: SH.wL, elbow: [7.4, -100.4], wrist: [5, -89.4], hand: false, fixed: true })
+          + `<ellipse cx="3.6" cy="-87.4" rx="2.8" ry="2.2" fill="${kLo}"/><ellipse cx="4.8" cy="-88.4" rx="2.4" ry="1.4" fill="${skin}" transform="rotate(30 4.8 -88.4)"/>`
+          + wArm({ from: SH.wR, elbow: [30.4, -122.6], wrist: [37, -131.4] }),
+      },
+      embrace: {
+        back: mArm({ from: SH.mR, elbow: [.4, -101.6], wrist: [9, -95], hidden: true }),
+        manFront: mArm({ from: SH.mL, elbow: [-31, -98], wrist: [-29.4, -84.4] }),
+        front: wArm({ from: W(SH.wL), elbow: [4.4 + wx, -101.4], wrist: [-2.6, -111.4], fixed: true })
+          + wArm({ from: W(SH.wR), elbow: [26.6 + wx, -99], wrist: [28.6 + wx, -86.4] }),
+      },
+    }[pose];
+
+    const defs = `<defs>
+      <linearGradient id="${id}s" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="${sHi}"/><stop offset=".5" stop-color="${suit}"/><stop offset="1" stop-color="${sLo}"/></linearGradient>
+      <linearGradient id="${id}d" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${dHi}"/><stop offset=".42" stop-color="${dress}"/><stop offset="1" stop-color="${dLo}"/></linearGradient>
+      <linearGradient id="${id}k" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${kHi}"/><stop offset="1" stop-color="${kLo}"/></linearGradient>
+    </defs>`;
+
+    const skirtD = spin
+      ? 'M10.6 -88 C2 -66 -10 -40 -24 -12 C-12 -4 6 0 24 0 C40 0 54 -6 64 -16 C50 -36 36 -62 21.6 -88 Z'
+      : 'M10.6 -88 C4 -64 -2 -36 -10 -5 C-3 -.5 10 1.6 24 1.2 C35 .8 45 -1.6 53 -8 C45 -30 34 -60 21.6 -88 Z';
+    const folds = spin
+      ? { hi: 'M13 -86 C8 -60 0 -32 -10 -7 M18 -86 C24 -60 36 -34 50 -9', lo: 'M15.6 -86 C15 -58 14 -30 12 0 M20.6 -86 C30 -62 44 -38 59 -14', hem: 'M-24 -12 C-12 -4 6 0 24 0 C40 0 54 -6 64 -16' }
+      : { hi: 'M13 -86 C10 -60 7 -32 4 0 M18 -86 C22 -60 30 -32 40 -3', lo: 'M15.6 -86 C16 -58 17 -30 18 1 M20.6 -86 C27 -62 38 -34 49 -7', hem: 'M-10 -5 C-3 -.5 10 1.6 24 1.2 C35 .8 45 -1.6 53 -8' };
+    /* атласная лодочка под юбкой: из-под подола выглядывает только носок */
+    const pump = (tx) => `<g>
+        <path d="M${tx} -.5 C${tx} -1.9 ${tx + 1.8} -3.2 ${tx + 4.8} -3.5 L${tx + 13} -3.9 L${tx + 13} 0 L${tx + 1.1} 0 C${tx + .3} 0 ${tx} -.2 ${tx} -.5 Z" fill="${shoe}"/>
+        <path d="M${tx + .8} -1.3 C${tx + 2} -2.5 ${tx + 3.6} -2.9 ${tx + 6} -3.1" stroke="${shoeHi}" stroke-width=".55" fill="none" stroke-linecap="round"/>
+        <path d="M${tx + .6} 0 H${tx + 12}" stroke="#8f7350" stroke-width=".5"/></g>`;
+    const toe = spin ? pump(-14) : pump(-6.4);
+
+    const man = `
+      <path d="M-27 -70 C-27.4 -52 -27 -38 -27.8 -24 L-29.2 -4.4 L-23.4 -4.4 L-22 -24 C-21 -38 -20.2 -52 -17.6 -70 Z" fill="${sLo}"/>
+      <path d="M-15 -70 C-11.6 -56 -8.4 -44 -7 -34 C-5.4 -22 -4 -12 -3.4 -4.4 L2.6 -4.4 C2 -14 .8 -26 -.8 -36 C-2 -48 -3.4 -60 -4.4 -70 Z" fill="${sleeve}"/>
+      <path d="M-24.4 -66 C-24.8 -46 -24.6 -30 -25.8 -8 M-8.6 -66 C-6 -50 -3.4 -32 -.6 -8" stroke="${sHi}" stroke-opacity=".5" stroke-width=".7" fill="none"/>
+      <path d="M-30.4 -4.8 C-30.8 -2 -30.4 0 -29 0 L-19.2 0 C-17.6 0 -17.2 -1.4 -18.4 -2.3 C-20.4 -3.7 -23 -4.6 -24.6 -5 Z" fill="#111"/>
+      <path d="M-3.8 -5 C-4 -2.2 -3.6 0 -2.2 0 L8 0 C9.8 0 10.2 -1.5 8.8 -2.4 C6.6 -3.9 3 -4.8 1.4 -5.1 Z" fill="#111"/>
+      <path d="M-28.4 -3.8 C-25.6 -3.6 -22.4 -2.8 -20 -1.4 M-1.8 -4 C1.4 -3.8 4.6 -3 7.2 -1.6" stroke="#fff" stroke-opacity=".45" stroke-width=".6" fill="none" stroke-linecap="round"/>
+      <path d="M-28.2 -115.6 C-24 -118.6 -10.2 -118.8 -5 -116 C-2.8 -108 -2.4 -96 -3.4 -84 L-4.2 -69.4 C-10 -67.6 -20.4 -67.6 -26.8 -69.4 L-28.2 -84 C-30.4 -96 -30.6 -108 -28.2 -115.6 Z" fill="${sleeve}"/>
+      <path d="M-19.6 -117.2 L-16 -96 L-12.6 -117.2 Z" fill="${shirt}"/>
+      <path d="M-19.6 -117.2 L-23 -109.6 L-16.6 -95.6 Z M-12.6 -117.2 L-9.4 -109.6 L-15.4 -95.6 Z" fill="${lapel}"/>
+      <path d="M-22.8 -109.8 L-16.8 -96" stroke="#fff" stroke-opacity=".18" stroke-width=".6"/>
+      <path d="M-19.4 -116.6 L-16 -114.6 L-12.8 -116.6 L-12.8 -112.8 L-16 -114.8 L-19.4 -112.8 Z" fill="#141414"/>
+      <circle cx="-16" cy="-106" r=".55" fill="#d9d4ca"/><circle cx="-16" cy="-101.4" r=".55" fill="#d9d4ca"/>
+      <circle cx="-15.8" cy="-89.6" r="1" fill="${sLo}"/>
+      <path d="M-26.4 -104.6 L-23 -104.6 L-24.4 -102.4 Z" fill="${shirt}"/>
+      <path d="M-26.8 -69.4 C-20.4 -67.6 -10 -67.6 -4.2 -69.4" stroke="${sLo}" stroke-width=".9" fill="none"/>
+      <path d="M-27.4 -112 C-29 -100 -28.6 -86 -27 -72" stroke="${sHi}" stroke-opacity=".55" stroke-width=".8" fill="none"/>
+      <!-- голова кавалера: профиль, бровь, глаз, ухо, линия скулы -->
+      <path d="M-17.6 -123 L-12.6 -123 L-12 -117 L-18.4 -117 Z" fill="${kLo}"/>
+      <path d="M-21 -136 C-21 -141 -15 -143 -11 -141 C-8.6 -139.8 -7.6 -137 -7.8 -134.4 L-6.4 -131.8 C-6.2 -131.2 -6.6 -130.8 -7.2 -130.6 L-7.4 -128.4 C-7.6 -126.2 -9.4 -124.4 -12 -124.2 L-12.6 -122.6 L-17.6 -122.6 L-18.6 -125 C-21 -126.6 -22.6 -129.6 -22.4 -132.6 C-22.3 -134 -21.8 -135.2 -21 -136 Z" fill="url(#${id}k)"/>
+      <path d="M-16.4 -132.4 C-17.6 -132.4 -18 -130.6 -17.6 -129.4 C-17.2 -128.4 -16.2 -128.4 -15.8 -129.2" stroke="${kLo}" stroke-width=".7" fill="none"/>
+      <path d="M-12.4 -135.2 q1.8 -1.1 3.6 -.3" stroke="${hairM}" stroke-width=".8" fill="none" stroke-linecap="round"/>
+      <path d="M-11.6 -132.8 q1.1 -.8 2.2 -.1 q-1.1 .5 -2.2 .1 Z" fill="#2b201a"/>
+      <path d="M-7.3 -128 q-.8 .35 -1.6 .1" stroke="#8c4f45" stroke-opacity=".7" stroke-width=".5" fill="none" stroke-linecap="round"/>
+      <path d="M-15.6 -126 C-14 -124.8 -12.6 -124.4 -11.6 -124.4" stroke="${kLo}" stroke-width=".8" fill="none"/>
+      <path d="M-22.6 -131 C-23.6 -138 -19 -143.4 -12.6 -142.6 C-9.4 -142.2 -7.6 -140 -7.8 -137.6 C-10.4 -138.6 -13 -138.2 -15 -137 C-16.6 -136 -17.6 -134.2 -18 -132.2 C-19.4 -131.4 -21.4 -130.6 -22.6 -131 Z" fill="${hairM}"/>
+      <path d="M-19.8 -139.6 C-17 -141.4 -13.4 -141.6 -10.6 -140.6 M-21.4 -136 C-20.6 -138.4 -19 -139.6 -17 -140.2" stroke="#fff" stroke-opacity=".22" stroke-width=".6" fill="none" stroke-linecap="round"/>`;
+
+    const woman = `<g transform="translate(${wx} 0)">
+      <g class="skirt${spin ? ' skirt--spin' : ''}" style="--cd:${delay}s">
+        ${toe}
+        <path d="${skirtD}" fill="url(#${id}d)"/>
+        <path d="${folds.hi}" stroke="${dHi}" stroke-opacity=".7" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="${folds.lo}" stroke="${dLo}" stroke-opacity=".55" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="${folds.hem}" stroke="${dHi}" stroke-opacity=".55" stroke-width="1.1" fill="none"/>
+      </g>
+      <path d="M9.4 -111 C11.6 -112.8 14.4 -112.6 16 -110.4 C17.6 -112.6 20.6 -112.8 22.6 -111 C23.6 -104 23 -95 21.6 -87.6 L10.6 -87.6 C9 -95 8.4 -104 9.4 -111 Z" fill="url(#${id}d)"/>
+      <path d="M11 -108 C10.6 -102 11 -95 12.2 -89.4" stroke="${dHi}" stroke-opacity=".65" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+      <path d="M10.4 -90 C14 -88.8 18.4 -88.8 21.8 -90 L21.6 -86.8 C18.2 -85.6 14 -85.6 10.6 -86.8 Z" fill="${dLo}"/>
+      <path d="M8.6 -114.4 C10.8 -116.8 20.6 -116.8 23.2 -114.4 L22.6 -110.8 C20.6 -112.6 17.6 -112.4 16 -110.4 C14.4 -112.4 11.6 -112.6 9.4 -110.8 Z" fill="url(#${id}k)"/>
+      <path d="M12.4 -114.6 C14 -113.8 15.2 -113.8 16 -114.6 M16 -114.6 C16.8 -113.8 18 -113.8 19.6 -114.6" stroke="${kLo}" stroke-opacity=".6" stroke-width=".45" fill="none"/>
+      <path d="M13.6 -121.4 L18.2 -121.4 L19 -114.8 L12.8 -114.8 Z" fill="${kLo}"/>
+      <!-- голова дамы: профиль, бровь, глаз с ресницами, губы, румянец, причёска -->
+      <g transform="rotate(${pose === 'embrace' ? -4 : 7} 15.8 -120)">
+        <path d="M21 -132.4 C21.4 -137 16.6 -139.4 12.6 -138 C10.2 -137.2 9.2 -134.8 9.4 -132.4 L8.4 -129.6 C8.2 -129 8.6 -128.6 9.2 -128.4 L9.4 -126.6 C9.6 -124.4 11 -122.6 13.2 -122 L13.6 -119.8 L18.2 -119.8 L18.8 -123 C21 -124.6 22.4 -127.4 22.2 -130.2 C22.1 -131 21.7 -131.8 21 -132.4 Z" fill="url(#${id}k)"/>
+        <ellipse cx="13" cy="-127.8" rx="1.6" ry=".9" fill="#e7837f" fill-opacity=".28"/>
+        <path d="M10.2 -133.4 q1.6 -1 3.3 -.3" stroke="${hairW}" stroke-width=".6" fill="none" stroke-linecap="round"/>
+        <path d="M10.3 -130.8 q1.2 .8 2.5 0" stroke="#2b201a" stroke-width=".6" fill="none" stroke-linecap="round"/>
+        <path d="M10.6 -130.5 l-.5 .8 M11.5 -130.2 l-.3 .9 M12.4 -130.4 l-.1 .9" stroke="#2b201a" stroke-width=".35" stroke-linecap="round"/>
+        <path d="M9.1 -126.3 q.8 -.5 1.5 0 q-.7 .8 -1.5 0 Z" fill="#a2394a"/>
+        <path d="M9.6 -128.6 C10.2 -128.2 10.8 -128.2 11.2 -128.6" stroke="${kLo}" stroke-width=".4" fill="none"/>
+        <path d="M9.4 -134.2 C9.6 -138.8 14 -140.8 18 -140 C21.6 -139.2 23.4 -136.2 22.6 -132.4 C21 -134.4 18.4 -135.6 15.6 -135.8 C13.2 -135.8 11 -135.2 9.4 -134.2 Z" fill="${hairW}"/>
+        <path d="M20.6 -136.6 C23.6 -134 23.6 -128.6 21.6 -124.4 L19.6 -126 C20.6 -129 20.8 -132.6 19.6 -134.6 Z" fill="${hairW}"/>
+        <circle cx="24.4" cy="-134.4" r="4.6" fill="${hairW}"/>
+        <path d="M21.6 -137 C23.4 -138.6 26 -138.4 27.4 -136.6 M12 -138.6 C14.6 -139.8 17.6 -139.6 19.8 -138.4" stroke="#fff" stroke-opacity=".28" stroke-width=".6" fill="none" stroke-linecap="round"/>
+      </g>
+    </g>`;
+
+    const body = `${arms.back}${man}${arms.manFront}${woman}${arms.front}`;
+
+    return `<g transform="translate(${x} ${y}) scale(${s})">
+      ${defs}
+      <ellipse class="couple__shadow" style="--cd:${delay}s" cx="10" cy="0" rx="40" ry="4.2" fill="#2a2420" fill-opacity=".2"/>
+      <g class="couple__glide" style="--cd:${delay}s">
+        <g mask="url(#reflMask)" opacity=".16"><g transform="scale(1 -1)"><g class="couple__bob" style="--cd:${delay}s">${body}</g></g></g>
+        <g class="couple__bob" style="--cd:${delay}s">${body}</g>
+      </g>
+    </g>`;
+  };
+
+  const pairs = [
+    { x: 114, y: 224, s: .84, dress: '#8B1E3F', suit: '#4B4B4B', hairM: '#2a1d16', hairW: '#c9a26a', skin: '#efcfb6', delay: -.6, pose: 'arch' },
+    { x: 282, y: 224, s: .84, dress: '#6B7F98', suit: '#5A0E1A', hairM: '#5a3a24', hairW: '#2c1d15', skin: '#e3bf9f', delay: -1.4, pose: 'embrace' },
+    { x: 190, y: 242, s: 1, dress: '#AFC7E3', suit: '#1A1A1A', hairM: '#1f1712', hairW: '#4a3020', skin: '#f0d2b9', delay: 0, pose: 'promenade' },
+  ];
+  $('#dancers').innerHTML = pairs.map(couple).join('');
+
+  /* танец идёт, только пока сцена на экране */
+  new IntersectionObserver(([e]) => scene.classList.toggle('is-live', e.isIntersecting && !reduceMotion), { rootMargin: '60px 0px' }).observe(scene);
+  if (svg) svg.setAttribute('data-ready', '1');
+})();
+
+/* =========================================================================
    КАЛЕНДАРЬ: ДЕКАБРЬ 2026
    ========================================================================= */
 (function buildCalendar() {

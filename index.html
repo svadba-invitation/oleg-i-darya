@@ -13,8 +13,8 @@
   <link rel="preload" href="fonts/YsabeauOffice-normal-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/GreatVibes-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="img/seal.webp" as="image" type="image/webp">
-  <link rel="stylesheet" href="css/fonts.css?v=20261017e">
-  <link rel="stylesheet" href="css/style.css?v=20261017e">
+  <link rel="stylesheet" href="css/fonts.css?v=20261017z">
+  <link rel="stylesheet" href="css/style.css?v=20261017z">
 </head>
 <body class="is-locked">
 
@@ -74,11 +74,33 @@
         <span class="hero__name hero__name--2" data-hero="4">Дарья</span>
       </h1>
 
-      <figure class="hearth" id="hearth" data-hero="5" aria-hidden="true">
-        <div class="hearth__halo"></div>
+      <figure class="hearth" id="hearth" data-hero="5">
+        <div class="hearth__halo" aria-hidden="true"></div>
+        <!-- детские фото над камином: вылетают с краёв экрана -->
+        <figure class="polaroid polaroid--l">
+          <div class="polaroid__card">
+            <span class="polaroid__tape polaroid__tape--wine" aria-hidden="true"></span>
+            <picture>
+              <source srcset="img/photo-oleg.webp" type="image/webp">
+              <img src="img/photo-oleg.jpg" alt="Олег в детстве" width="705" height="850" decoding="async">
+            </picture>
+          </div>
+          <span class="sparks" aria-hidden="true"><i class="spark" style="--sx:-6%;--sy:10%;--dx:-14px;--dy:-12px;--sd:0s;--ss:1"></i><i class="spark" style="--sx:50%;--sy:-8%;--dx:0px;--dy:-18px;--sd:0.08s;--ss:0.8"></i><i class="spark" style="--sx:106%;--sy:14%;--dx:16px;--dy:-10px;--sd:0.04s;--ss:1.1"></i><i class="spark" style="--sx:108%;--sy:62%;--dx:18px;--dy:6px;--sd:0.12s;--ss:0.7"></i><i class="spark" style="--sx:96%;--sy:104%;--dx:12px;--dy:16px;--sd:0.06s;--ss:0.9"></i><i class="spark" style="--sx:40%;--sy:108%;--dx:-4px;--dy:18px;--sd:0.1s;--ss:0.8"></i><i class="spark" style="--sx:-8%;--sy:72%;--dx:-16px;--dy:8px;--sd:0.14s;--ss:1"></i><i class="spark" style="--sx:22%;--sy:-6%;--dx:-8px;--dy:-16px;--sd:0.18s;--ss:0.6"></i><i class="spark" style="--sx:78%;--sy:-4%;--dx:10px;--dy:-16px;--sd:0.02s;--ss:0.7"></i><i class="spark" style="--sx:-4%;--sy:40%;--dx:-18px;--dy:-2px;--sd:0.2s;--ss:0.6"></i></span>
+        </figure>
+        <figure class="polaroid polaroid--r">
+          <div class="polaroid__card">
+            <span class="polaroid__tape polaroid__tape--green" aria-hidden="true"></span>
+            <picture>
+              <source srcset="img/photo-darya.webp?v=2" type="image/webp">
+              <img src="img/photo-darya.jpg?v=2" alt="Дарья в детстве" width="705" height="850" decoding="async">
+            </picture>
+          </div>
+          <span class="sparks" aria-hidden="true"><i class="spark" style="--sx:-6%;--sy:10%;--dx:-14px;--dy:-12px;--sd:0s;--ss:1"></i><i class="spark" style="--sx:50%;--sy:-8%;--dx:0px;--dy:-18px;--sd:0.08s;--ss:0.8"></i><i class="spark" style="--sx:106%;--sy:14%;--dx:16px;--dy:-10px;--sd:0.04s;--ss:1.1"></i><i class="spark" style="--sx:108%;--sy:62%;--dx:18px;--dy:6px;--sd:0.12s;--ss:0.7"></i><i class="spark" style="--sx:96%;--sy:104%;--dx:12px;--dy:16px;--sd:0.06s;--ss:0.9"></i><i class="spark" style="--sx:40%;--sy:108%;--dx:-4px;--dy:18px;--sd:0.1s;--ss:0.8"></i><i class="spark" style="--sx:-8%;--sy:72%;--dx:-16px;--dy:8px;--sd:0.14s;--ss:1"></i><i class="spark" style="--sx:22%;--sy:-6%;--dx:-8px;--dy:-16px;--sd:0.18s;--ss:0.6"></i><i class="spark" style="--sx:78%;--sy:-4%;--dx:10px;--dy:-16px;--sd:0.02s;--ss:0.7"></i><i class="spark" style="--sx:-4%;--sy:40%;--dx:-18px;--dy:-2px;--sd:0.2s;--ss:0.6"></i></span>
+        </figure>
+
 
         <!-- Глубина топки: задняя стенка, кирпич, дальнее полено, угли -->
-        <svg class="hearth__layer" viewBox="0 0 360 280">
+        <svg class="hearth__layer" viewBox="0 0 360 280" aria-hidden="true">
           <defs>
             <linearGradient id="fbWall" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#060505"/>
@@ -117,10 +139,10 @@
         </svg>
 
         <!-- Живой огонь -->
-        <canvas class="hearth__fire" id="fire"></canvas>
+        <canvas class="hearth__fire" id="fire" aria-hidden="true"></canvas>
 
         <!-- Передний план: поленья, решётка, мраморный портал, полка -->
-        <svg class="hearth__layer" viewBox="0 0 360 280">
+        <svg class="hearth__layer" viewBox="0 0 360 280" aria-hidden="true">
           <defs>
             <linearGradient id="mbl" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#2a5f4d"/>
@@ -565,6 +587,75 @@
         <p class="rail__note">Мужчины также могут дополнить свой образ белой или светлой рубашкой в&nbsp;сочетании с&nbsp;костюмом из&nbsp;нашей палитры.</p>
       </div>
 
+      <figure class="dance" id="dance" data-reveal aria-label="Танцующие пары в нарядах цветов дресс-кода">
+        <svg viewBox="0 0 400 250" id="dance-svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="drapeG" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#173a2d"/><stop offset=".45" stop-color="#2f6a54"/><stop offset="1" stop-color="#1d4a3a"/>
+            </linearGradient>
+            <radialGradient id="floorGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#f3c77a" stop-opacity=".32"/><stop offset="1" stop-color="#f3c77a" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="reflFade" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#000"/>
+            </linearGradient>
+            <mask id="reflMask" maskUnits="userSpaceOnUse" x="-90" y="0" width="220" height="160">
+              <rect x="-90" y="0" width="220" height="160" fill="url(#reflFade)"/>
+            </mask>
+            <linearGradient id="bronze" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#4a3a2c"/><stop offset=".5" stop-color="#8a7357"/><stop offset="1" stop-color="#3e3024"/>
+            </linearGradient>
+          </defs>
+
+          <!-- тёплый свет на паркете -->
+          <ellipse cx="200" cy="232" rx="185" ry="16" fill="url(#floorGlow)"/>
+          <path d="M18 229 H382" stroke="#151815" stroke-opacity=".1" stroke-width="1"/>
+
+          <!-- шторы с бордовыми подхватами -->
+          <g id="drapeL">
+            <path d="M0 0 H62 C56 52 44 104 33 148 C29 172 36 204 46 236 H0 Z" fill="url(#drapeG)"/>
+            <path d="M14 0 C16 60 12 120 10 236 M30 0 C30 50 24 110 20 150 M46 0 C42 50 34 110 27 148" stroke="#102a20" stroke-opacity=".55" stroke-width="1.4" fill="none"/>
+            <path d="M22 0 C22 60 18 120 16 236 M38 0 C36 50 30 110 24 150" stroke="#5b9479" stroke-opacity=".35" stroke-width=".8" fill="none"/>
+            <!-- сборка ткани под шнуром -->
+            <path d="M4 136 C10 143 20 147 31 146 M6 162 C12 156 22 154 32 153" stroke="#0e2419" stroke-opacity=".45" stroke-width="1" fill="none"/>
+            <path d="M8 140 C14 145 22 148 30 148" stroke="#6aa58b" stroke-opacity=".3" stroke-width=".6" fill="none"/>
+            <ellipse cx="18" cy="151" rx="17" ry="4" fill="#0b1f16" fill-opacity=".35"/>
+            <!-- витой шнур обхватывает штору от самого края -->
+            <path d="M0 150.4 C8 152.6 20 153.2 34.6 149.6" stroke="#4a0c17" stroke-width="4.6" fill="none"/>
+            <path d="M0 150.4 C8 152.6 20 153.2 34.6 149.6" stroke="#8e2639" stroke-width="3.4" stroke-dasharray="1.7 1.5" fill="none"/>
+            <path d="M0 149.6 C8 151.6 20 152.2 34 148.8" stroke="#d98a96" stroke-opacity=".45" stroke-width=".6" fill="none"/>
+            <!-- кисть -->
+            <path d="M35.6 150 C37.6 152 38.2 155 38 158" stroke="#5a0f1e" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <ellipse cx="35.6" cy="149.6" rx="3.4" ry="2.8" fill="url(#bronze)"/>
+            <circle cx="38" cy="160" r="2.8" fill="#7a1a2d"/>
+            <path d="M36.4 158.8 q1.6 -1 3.2 0" stroke="#c45a6c" stroke-opacity=".6" stroke-width=".5" fill="none"/>
+            <rect x="35.4" y="162.2" width="5.2" height="2" rx=".8" fill="url(#bronze)"/>
+            <path d="M35.6 164 C34.8 169 34 174 33.2 179.4 L42.8 179.4 C42 174 41.2 169 40.4 164 Z" fill="#6a1424"/>
+            <path d="M34.6 179.4 V172 M36.2 179.6 V166.6 M37.8 179.8 V165 M39.4 179.6 V166.4 M41 179.4 V171" stroke="#4a0c17" stroke-width=".5"/>
+            <path d="M36.8 165.4 C36.4 170 36.2 174 36 178" stroke="#b84a5e" stroke-opacity=".55" stroke-width=".6" fill="none"/>
+            <path d="M33.2 179.4 h9.6" stroke="#3e0a14" stroke-width=".8"/>
+          </g>
+          <use href="#drapeL" transform="translate(400 0) scale(-1 1)"/>
+
+          <!-- гирлянда с огоньками (скрипт) -->
+          <g id="danceGarland"></g>
+
+          <!-- канделябры (скрипт) -->
+          <g id="candelabras"></g>
+
+          <!-- пары (скрипт) -->
+          <g id="dancers"></g>
+
+          <!-- ноты в воздухе -->
+          <g class="dance__notes" fill="#6a1424">
+            <g class="dance__note" style="--nd:0s;--nx:150px;--ny:92px"><path transform="scale(.055)" d="M210.3,56.34l-80-24A8,8,0,0,0,120,40V148.26A48,48,0,1,0,136,184V98.75l69.7,20.91A8,8,0,0,0,216,112V64A8,8,0,0,0,210.3,56.34Z"/></g>
+            <g class="dance__note" style="--nd:-1.8s;--nx:262px;--ny:92px"><path transform="scale(.045)" d="M210.3,56.34l-80-24A8,8,0,0,0,120,40V148.26A48,48,0,1,0,136,184V98.75l69.7,20.91A8,8,0,0,0,216,112V64A8,8,0,0,0,210.3,56.34Z"/></g>
+            <g class="dance__note" style="--nd:-3.4s;--nx:206px;--ny:92px"><path transform="scale(.04)" d="M210.3,56.34l-80-24A8,8,0,0,0,120,40V148.26A48,48,0,1,0,136,184V98.75l69.7,20.91A8,8,0,0,0,216,112V64A8,8,0,0,0,210.3,56.34Z"/></g>
+            <g class="dance__note" style="--nd:-4.6s;--nx:330px;--ny:92px"><path transform="scale(.05)" d="M210.3,56.34l-80-24A8,8,0,0,0,120,40V148.26A48,48,0,1,0,136,184V98.75l69.7,20.91A8,8,0,0,0,216,112V64A8,8,0,0,0,210.3,56.34Z"/></g>
+          </g>
+        </svg>
+      </figure>
+
       <a class="btn btn--ghost" id="pinterest-link" href="#" target="_blank" rel="noopener" hidden data-reveal>
         <span>Вдохновение на Pinterest</span>
         <span class="btn__ico"><svg class="ico" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M198,64V168a6,6,0,0,1-12,0V78.48L68.24,196.24a6,6,0,0,1-8.48-8.48L177.52,70H88a6,6,0,0,1,0-12H192A6,6,0,0,1,198,64Z"/></svg></span>
@@ -747,6 +838,6 @@
 
   <footer class="foot">12.12.2026</footer>
 
-  <script src="js/main.js?v=20261017e"></script>
+  <script src="js/main.js?v=20261017z"></script>
 </body>
 </html>
