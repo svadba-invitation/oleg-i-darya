@@ -334,6 +334,7 @@ const seal = $('#envelope');
 function openEnvelope() {
   if (intro.classList.contains('is-open')) return;
   intro.classList.add('is-open');
+  musicPlayer.play(true);
   const t = reduceMotion ? 0 : 1;
   setTimeout(() => { document.body.classList.add('is-ready'); hearthFire.ignite(); }, 450 * t);
   setTimeout(() => {
@@ -939,7 +940,9 @@ $$('[data-silk]').forEach((host) => {
 /* =========================================================================
    МУЗЫКА: ТОЛЬКО ПО КНОПКЕ
    ========================================================================= */
-(function music() {
+/* Музыка стартует от нажатия на печать конверта (это жест пользователя,
+   поэтому браузеры разрешают звук), кнопка с нотой включает и выключает. */
+const musicPlayer = (function music() {
   const btn = $('#music');
   const audio = $('#track');
   const toast = $('.music__toast', btn);
@@ -959,25 +962,28 @@ $$('[data-silk]').forEach((host) => {
       if (p === 1) { clearInterval(fade); done && done(); }
     }, 40);
   };
-
-  btn.addEventListener('click', async () => {
-    if (audio.paused) {
-      try {
-        audio.volume = 0;
-        await audio.play();
-        setState(true);
-        rampTo(0.7, 1600);
-      } catch (err) {
-        toast.textContent = 'Трек не найден';
-        toast.classList.add('is-on');
-        setTimeout(() => { toast.classList.remove('is-on'); }, 2400);
-        console.warn('Не удалось включить audio/music.m4a', err);
-      }
-    } else {
+  const play = async (quiet) => {
+    try {
+      audio.volume = 0;
+      await audio.play();
+      setState(true);
+      rampTo(0.7, 2200);
+    } catch (err) {
       setState(false);
-      rampTo(0, 500, () => audio.pause());
+      if (quiet) return;
+      toast.textContent = 'Трек не найден';
+      toast.classList.add('is-on');
+      setTimeout(() => { toast.classList.remove('is-on'); }, 2400);
+      console.warn('Не удалось включить audio/music.m4a', err);
     }
-  });
+  };
+  const stop = () => {
+    setState(false);
+    rampTo(0, 500, () => audio.pause());
+  };
+
+  btn.addEventListener('click', () => (audio.paused ? play(false) : stop()));
+  return { play };
 })();
 
 /* =========================================================================
