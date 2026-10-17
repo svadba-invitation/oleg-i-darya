@@ -21,7 +21,6 @@ const CONFIG = {
     women: [
       { name: 'Стальной голубой', hex: '#6B7F98' },
       { name: 'Пудрово-голубой', hex: '#AFC7E3' },
-      { name: 'Ледяной голубой', hex: '#D7E6F3' },
       { name: 'Холодный бежевый', hex: '#D8C9BD' },
       { name: 'Пыльная роза', hex: '#C8929B' },
       { name: 'Ягодный', hex: '#8B1E3F' },
@@ -33,7 +32,6 @@ const CONFIG = {
       { name: 'Стальной голубой', hex: '#6B7F98' },
       { name: 'Пудрово-голубой', hex: '#AFC7E3' },
       { name: 'Холодный бежевый', hex: '#D8C9BD' },
-      { name: 'Ягодный', hex: '#8B1E3F' },
       { name: 'Бордо', hex: '#5A0E1A' },
     ],
   },
@@ -883,7 +881,7 @@ function silkSVG(hex, id) {
   }).join('');
   const seed = id.charCodeAt(id.length - 1) % 9 + 2;
 
-  return `<svg viewBox="0 0 200 270" aria-hidden="true">
+  return `<svg viewBox="0 0 200 186" aria-hidden="true">
     <defs>
       <linearGradient id="g-${id}" x1="0" y1="0" x2="1" y2="0.08">${stops}</linearGradient>
       <linearGradient id="d-${id}" x1="0" y1="0" x2="0" y2="1">
@@ -901,16 +899,18 @@ function silkSVG(hex, id) {
         <feDisplacementMap in="SourceGraphic" scale="52" xChannelSelector="R" yChannelSelector="G"/>
       </filter>
       <clipPath id="c-${id}">
-        <path d="M0 0 H200 V234 C186 250 170 236 152 248 C134 260 118 242 100 252 C82 262 66 244 48 254 C30 264 16 248 0 256 Z"/>
+        <path d="M100 180 C62 150 6 118 6 62 C6 28 32 6 60 6 C80 6 94 18 100 34 C106 18 120 6 140 6 C168 6 194 28 194 62 C194 118 138 150 100 180 Z"/>
       </clipPath>
     </defs>
     <g clip-path="url(#c-${id})">
       <rect x="-50" y="-24" width="300" height="320" fill="url(#g-${id})" filter="url(#f-${id})"/>
-      <rect width="200" height="270" fill="url(#d-${id})"/>
+      <rect width="200" height="186" fill="url(#d-${id})"/>
       <g class="silk__sheen" style="mix-blend-mode:soft-light">
         <rect x="-70" y="-10" width="110" height="290" fill="url(#s-${id})" transform="skewX(-12)"/>
       </g>
     </g>
+    <path d="M100 180 C62 150 6 118 6 62 C6 28 32 6 60 6 C80 6 94 18 100 34 C106 18 120 6 140 6 C168 6 194 28 194 62 C194 118 138 150 100 180 Z" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="3"/>
+    <path d="M100 180 C62 150 6 118 6 62 C6 28 32 6 60 6 C80 6 94 18 100 34 C106 18 120 6 140 6 C168 6 194 28 194 62 C194 118 138 150 100 180 Z" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="1"/>
   </svg>`;
 }
 
@@ -923,25 +923,17 @@ dressIO.observe($('.dress'));
 $$('[data-silk]').forEach((host) => {
   const group = host.dataset.silk;
   const list = CONFIG.palette[group] || [];
-  const rows = [list.slice(0, 4), list.slice(4)].filter((r) => r.length);
-  rows.forEach((row, r) => {
-    const wrap = document.createElement('div');
-    wrap.className = 'rail__row';
-    wrap.innerHTML = '<div class="rail__bar" aria-hidden="true"></div>';
-    const ul = document.createElement('ul');
-    ul.className = 'rail__list' + (row.length === 3 ? ' rail__list--3' : '');
-    row.forEach((c, i) => {
-      const id = `${group}${r}${i}`;
-      const li = document.createElement('li');
-      li.innerHTML = `<figure class="silk">
-          <div class="silk__hang" style="--sd:${(-(r * 4 + i) * 0.9).toFixed(1)}s">${silkSVG(c.hex, id)}</div>
-          <figcaption><b>${c.name}</b></figcaption>
-        </figure>`;
-      ul.append(li);
-    });
-    wrap.append(ul);
-    host.append(wrap);
+  const ul = document.createElement('ul');
+  ul.className = 'hearts';
+  list.forEach((c, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<figure class="silk">
+        <div class="silk__heart" style="--sd:${(-i * 0.9).toFixed(1)}s">${silkSVG(c.hex, `${group}${i}`)}</div>
+        <figcaption><b>${c.name}</b></figcaption>
+      </figure>`;
+    ul.append(li);
   });
+  host.append(ul);
 });
 
 /* =========================================================================
